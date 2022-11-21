@@ -1,0 +1,32 @@
+.SubNav{
+    width: 60%; 
+    height: 48px;
+    box-shadow: 0.5px 1px 2px;
+    border-radius: 5px;
+
+}
+
+.SubNav ul{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+    
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+
+.Selected a{
+    color: #0500F2;
+    margin:4px ;
+     
+}
