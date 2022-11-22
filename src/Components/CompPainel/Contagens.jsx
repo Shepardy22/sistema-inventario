@@ -1,11 +1,22 @@
-import '../CompPainel/Contagens-Style.css';
+import { useState } from 'react';
+import '../CompPainel/Contagens-Style.scss';
 
 export default function Contagens() {
+
+
+     function ObterLista(){
+        const [lista, setLista] = useState([]);
+
+        
+        
+     }
+
+
     return(
        
-            <div className='Contagens'>
+            <div className='Container'>
 
-                <ul className="DescSubMenu">
+                <ul className="TitulosSubMenu">
                     <li>Departamentos</li>
                     <li>Range/Dep</li>
                     <li>Área</li>
@@ -19,9 +30,7 @@ export default function Contagens() {
                         {/* Departamentos */}
                         <div className='dep'>
                             <ul>
-                                <li>Dep001</li>
-                                <li>Dep002</li>
-                                <li>Dep003</li>
+                                
                             </ul>
                         </div>
                         {/* Range/Dep */}
