@@ -7,12 +7,14 @@ export default function Painel() {
     return (
         <div className="Painel">
 
-            <NavBar/>
+            <NavBar selected = 'painel'/>
 
             <div className='MainPainel'>
                 {/* SubNav e Descrição da Empresa */}
                 <div className='topPainel'>
-                    <SubNav/>
+                    <SubNav  submenu01='Contagens'
+                            submenu02='Detalhes'
+                            submenu03='Mapa'/>
 
                     {/* Descrição Empresa Contratante */}
                     <div className='DescEmp'>
