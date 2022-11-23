@@ -1,0 +1,50 @@
+.Container{
+    display: flex;
+    flex-direction: column;
+    border: black solid 1px;
+  
+    .TitulosSubMenu{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 60%;
+        
+        padding: 1rem;
+        background-color: #fff;
+        
+        cursor: pointer;
+        list-style: none;
+        font-size: 0.8rem;
+    
+    } 
+
+    .Descricao{
+        display: flex;
+        justify-content: space-between;  
+
+        .CxContagem{
+            width: 70%;
+            display: flex;
+            justify-content: space-around;  
+            .dep{
+                list-style: none;
+            }
+            
+        }
+
+        .painelLateral{
+            width: 30%;
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
