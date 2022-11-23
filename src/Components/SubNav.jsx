@@ -13,15 +13,15 @@ export default function SubNav(props) {
     return(
         <div className="SubNav">
             <ul>
-                <li className={subMenu === "departamentos" && "Selected"}>
-                    <button  onClick={()=>{handleSubMenu("departamentos")}} >{props.submenu01}
+                <li className={subMenu === "departamentos" ? "Selected" : null}>
+                    <button className='botaoSub'  onClick={()=>{handleSubMenu("departamentos")}} >{props.submenu01}
                     </button>
                 </li>
-                <li className={subMenu === "Ranges" && "Selected"}>
-                    <button onClick={()=>{handleSubMenu("Ranges")}}>{props.submenu02}
+                <li className={subMenu === "Ranges" ? "Selected" : null}>
+                    <button className='botaoSub' onClick={()=>{handleSubMenu("Ranges")}}>{props.submenu02}
                     </button></li>
-                <li className={subMenu === "Áreas" && "Selected"}>
-                    <button onClick={()=>{handleSubMenu("Áreas")}}>{props.submenu03}
+                <li className={subMenu === "Áreas" ? "Selected" : null}>
+                    <button className='botaoSub' onClick={()=>{handleSubMenu("Áreas")}}>{props.submenu03}
                     </button>
                 </li>
             </ul>
