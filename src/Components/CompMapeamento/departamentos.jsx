@@ -10,7 +10,7 @@ import { addDepAcess, getDepAcess, setDepAcess } from "../../services/dataAcess/
 
 export default function Departamentos() {
     const colectionRef = collection(db, 'Departamentos');
-    
+
 
     const [departamentos, setDepartamentos] = useState([]);
     const [name, setName] = useState('');
@@ -21,7 +21,7 @@ export default function Departamentos() {
             const data = await getDocs(colectionRef);
             setDepartamentos(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
         }
-        getData(); 
+        getData();
     }, []);
 
     async function deleteDep(id) {
@@ -29,44 +29,47 @@ export default function Departamentos() {
         return response;
     }
 
-    function setDep(){
-        setDepAction({ 
+    function setDep() {
+        setDepAction({
             name: name,
             areas: [
-                {area: '0001'},
-                {area: '0022'},
-                {area: '0111'}
+                { area: '0001' },
+                { area: '0022' },
+                { area: '0111' }
             ]
-         }, 'dep003');
+        }, 'dep003');
     }
 
-    
+
     function addDep() {
-        addDepAcess({ 
+        addDepAction({
             name: name,
             areas: [
-                {area: 'area001'},
-                {area: 'area002'},
-                {area: 'area003'}
+                { area: 'area001' },
+                { area: 'area002' },
+                { area: 'area003' }
             ]
-         });
+        });
     }
 
     function exiberDescricao(id) {
         const dep = departamentos.find(dep => dep.id === id);
         setDescricao(dep);
     }
-    
-    
+
+
 
     return (
         <div>
             <p>Departamentos</p>
+
+            
+
             <ul>
                 {departamentos && departamentos.map((departamento) => (
                     <li key={departamento.id}>
                         <p >{departamento.name}</p>
-                        <button onClick={()=> {exiberDescricao(departamento.id)}}>Visualizar</button>
+                        <button onClick={() => { exiberDescricao(departamento.id) }}>Visualizar</button>
                         <button onClick={() => { deleteDep(departamento.id) }}>
                             Remover
                         </button>
@@ -76,16 +79,16 @@ export default function Departamentos() {
             {/* Adcionar Departamento */}
             <div>
                 <p>Adicionar Departamento</p>
-                <input type="text" 
-                    placeholder="Nome do Departamento" 
-                    value={name} 
+                <input type="text"
+                    placeholder="Nome do Departamento"
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
-                />  
+                />
                 <button onClick={addDep}>Adicionar</button>
                 <button onClick={setDep}>Setar</button>
-                
+
             </div>
-                {/* Detalhes do Departamento */}
+            {/* Detalhes do Departamento */}
             <div>
                 visualizar departamentos
                 <div><h4>{descricao.name}</h4>
@@ -97,8 +100,10 @@ export default function Departamentos() {
                                 </p>
                             </div>
                         ))
-                        )}   
+                        )}
                     </div>
+                
+                    
                 </div>
             </div>
         </div>
