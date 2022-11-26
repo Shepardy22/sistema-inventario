@@ -3,8 +3,11 @@ import { useEffect, useState } from "react"
 import { db } from "../../firebaseConfig";
 import { addDepAction, getDepAction, setDepAction, updateDepAction } from "../../services/actions/depActions";
 import { addDepAcess, getDepAcess, setDepAcess } from "../../services/dataAcess/depAcess";
+import DarkExample from "../Tabelas/TabelaDescDep";
 
-
+import { Badge, Button, Col, Container, Row } from 'react-bootstrap';
+import TabelaDescDep from "../Tabelas/TabelaDescDep";
+import departamento from '../CompMapeamento/departamento.scss';
 
 
 
@@ -61,51 +64,66 @@ export default function Departamentos() {
 
     return (
         <div>
-            <p>Departamentos</p>
-
-            
-
-            <ul>
-                {departamentos && departamentos.map((departamento) => (
-                    <li key={departamento.id}>
-                        <p >{departamento.name}</p>
-                        <button onClick={() => { exiberDescricao(departamento.id) }}>Visualizar</button>
-                        <button onClick={() => { deleteDep(departamento.id) }}>
-                            Remover
-                        </button>
-                    </li>
-                ))}
-            </ul>
-            {/* Adcionar Departamento */}
+            {/* Departamentos */}
             <div>
-                <p>Adicionar Departamento</p>
-                <input type="text"
-                    placeholder="Nome do Departamento"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <button onClick={addDep}>Adicionar</button>
-                <button onClick={setDep}>Setar</button>
-
+                <p>Departamentos</p>
+                <ul>
+                    {departamentos && departamentos.map((departamento) => (
+                        <li key={departamento.id}>
+                            <div>
+                                <button onClick={() => { exiberDescricao(departamento.id) }}>
+                                    {departamento.name}</button>
+                             </div>
+                        </li>
+                    ))}
+                </ul>
+                {/* Adcionar Departamento */}
+                <div>
+                    <p>Adicionar Departamento</p>
+                    <input type="text"
+                        placeholder="Nome do Departamento"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <button onClick={addDep}>Adicionar</button>
+                    <button onClick={setDep}>Setar</button>
+                </div>
             </div>
             {/* Detalhes do Departamento */}
             <div>
                 visualizar departamentos
-                <div><h4>{descricao.name}</h4>
-                    <div>
-                        {descricao && (descricao.areas.map((area) => (
-                            <div>
-                                <p>
-                                    <p>{area.area}</p>
-                                </p>
-                            </div>
-                        ))
-                        )}
-                    </div>
-                
+                <div><Container>
+                        <Row>
+                            <Col xs={12} md={8}>
+                                <div className="Border">
+                                    <h4>{descricao.name}</h4>
+                                        {descricao && (<button onClick={() => { deleteDep(descricao.id) }}>X</button>)}
+                                </div>
+                            </Col>
+                            
+                        </Row>
                     
+                        <Row>
+                            <div>
+                                {descricao && (descricao.areas.map((area) => (
+                                    <div>
+                                        <p>{area.area}</p>
+                                    </div>
+                                    )))}
+                            </div>
+                        </Row>          
+                    
+                        <Row>
+                            <TabelaDescDep desc={descricao}/> 
+                        </Row>   
+                    </Container> 
+
+                    
+                       
                 </div>
+                
             </div>
         </div>
+        
     )
 }
