@@ -17,11 +17,15 @@ export default function SubNav(props) {
                     <button className='botaoSub'  onClick={()=>{handleSubMenu("departamentos")}} >{props.submenu01}
                     </button>
                 </li>
-                <li className={subMenu === "Ranges" ? "Selected" : null}>
-                    <button className='botaoSub' onClick={()=>{handleSubMenu("Ranges")}}>{props.submenu02}
+                <li className={subMenu === "Sessoes" ? "Selected" : null}>
+                    <button className='botaoSub' onClick={()=>{handleSubMenu("Sessoes")}}>{props.submenu02}
                     </button></li>
-                <li className={subMenu === "Áreas" ? "Selected" : null}>
-                    <button className='botaoSub' onClick={()=>{handleSubMenu("Áreas")}}>{props.submenu03}
+                <li className={subMenu === "Ranges" ? "Selected" : null}>
+                    <button className='botaoSub' onClick={()=>{handleSubMenu("Ranges")}}>{props.submenu03}
+                    </button>
+                </li>
+                <li className={subMenu === "areas" ? "Selected" : null}>
+                    <button className='botaoSub' onClick={()=>{handleSubMenu("areas")}}>{props.submenu04}
                     </button>
                 </li>
             </ul>
