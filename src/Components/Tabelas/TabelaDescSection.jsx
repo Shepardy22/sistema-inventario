@@ -1,9 +1,11 @@
 import Table from 'react-bootstrap/Table';
 
-function TabelaDescDep(desc) {
+function TabelaDescSection(desc) {
 
   
   const descricao = desc.desc;
+    
+  
 
   return (
     <Table striped bordered hover variant="dark">
@@ -17,9 +19,9 @@ function TabelaDescDep(desc) {
       </thead>
       <tbody>
         <tr>
-          <td>{descricao.qntSessoes}</td>
-          <td>{descricao.qntProdutos}</td>
-          <td>{descricao.brutoTotal}</td>
+          <td>{descricao && descricao.qndRanges}</td>
+          <td>{descricao && descricao.qntProdutos}</td>
+          <td>{descricao && descricao.brutoTotal}</td>
         </tr>
         <tr>
           <th>Responsavel Departamento</th>
@@ -27,9 +29,9 @@ function TabelaDescDep(desc) {
           <th>Status</th>
         </tr>
         <tr>
-        <td>{descricao.responsavel}</td>
-        <td>{descricao.ultInventario}</td>
-        <td>{descricao.status}</td>
+        <td>{descricao && descricao.responsavel}</td>
+        <td>{descricao && descricao.ultInventario}</td>
+        <td>{descricao && descricao.status}</td>
         </tr>
         
       </tbody>
@@ -37,4 +39,4 @@ function TabelaDescDep(desc) {
   );
 }
 
-export default TabelaDescDep;
+export default TabelaDescSection;
