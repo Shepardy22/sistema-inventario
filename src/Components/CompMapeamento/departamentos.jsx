@@ -1,7 +1,7 @@
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { db } from "../../firebaseConfig";
-import { addDepAction, getDepAction, setDepAction, updateDepAction } from "../../services/actions/depActions";
+import { addDepAction, addSectionAction, getDepAction, setDepAction, updateDepAction } from "../../services/actions/depActions";
 
 import { Row } from 'react-bootstrap';
 import TabelaDescDep from "../Tabelas/TabelaDescDep";
@@ -25,19 +25,18 @@ export default function Departamentos(props) {
  
 
     useEffect(() => {
-        const colectionRef = collection(db, 'Departamentos');
-        const getData = async () => {
-            const data = await getDocs(colectionRef);
-            setDepartamentos(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+        //criar snapshot
+        const unsubscribe = onSnapshot(collection(db, 'Departamentos'), (snapshot) => {
+            setDepartamentos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
         }
-        getData();
+        )
+        
     }, []);
 
     async function deleteDep(id) {
         const response = await deleteDoc(doc(db, "Departamentos", id));
         return response;
     }
-
     function setDep() {
         setDepAction({
             name: name,
@@ -48,7 +47,6 @@ export default function Departamentos(props) {
             ]
         }, 'dep003');
     }
-
     function addDep() {
         addDepAction({
             name: name,
@@ -69,7 +67,6 @@ export default function Departamentos(props) {
             ]
         });
     }
-
     function exiberDescricao(id) {
         setselecionado(id);
         function selecionarSessao(id) {
@@ -96,6 +93,22 @@ export default function Departamentos(props) {
         to("Sessoes")
         
  
+    }
+    function addSection(){
+        const id = selecionado;
+        addSectionAction({
+            sectionName: 'sessao005',
+            qntProdutos: 524,
+            brutoTotal: 24348,
+            responsavel: 'Dione',
+            ultInventario: '18/07/2022',
+            status: 'Validado',
+            ranges: [
+                { range: '010-020' },
+                { range: '021-030' },
+                { range: '031-042' }
+            ]}
+        , id);
     }
 
     return (
@@ -127,14 +140,15 @@ export default function Departamentos(props) {
                 </div>
 
                 <div >
-                    {   sectionList.length > 0  && sectionList.map((section) => (
+                    {   sectionList.length > 0  ? sectionList.map((section) => (
                         <div key={section.id}>
                             <button onClick={() => {selecaoSessao(section.id)}} className="Sessoes">{section.sectionName}</button>
                         </div>
-                    ))}
+                    )) : <button onClick={()=>{addSection()}} className="Sessoes">Adicionar Sessão</button>}
                     
 
                 </div>
+
             </div>
 
             {/* Detalhes do Departamento */}

@@ -34,3 +34,7 @@ export async function getDepAcess() {
     return response; 
 }
 
+export async function addSectionAcess(body, id) {
+    const response = await addDoc(collection(db, "Departamentos", `${id}`, "Sessoes"), body);
+    return response;
+}
