@@ -11,36 +11,41 @@ import TabelaDescSection from "../Tabelas/TabelaDescSection";
 export default function Sessoes(props) {
 
    
-    const departamentoID = props.sessionS;
-    const setId = props.sectionId;
+    const departamentoID = props.dep;
+    const sessionObj = props.section;
+
+    
+    
     
     
     
     
 
-    const colectionRef = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes');
+    const colectionRef = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes', );
 
     const [name, setName] = useState('');
 
     const [sessoes, setSessoes] = useState([]);
     const [sessionSelected, setSessionSelected] = useState(null);
 
+    
+
     useEffect (() => {
         const getData = async () => {
             const data = await getDocs(colectionRef);
             setSessoes(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+            
+
         }
         getData();
+        
 
         
         
     }, []);
 
-    function exiberDescricao(id){
-        const session = sessoes.find(session => session.id === id);
-        setSessionSelected(session);
-       
-    }
+    
+    
 
     return(
        
@@ -50,14 +55,7 @@ export default function Sessoes(props) {
                 {/* Departamen */}
                 <div className="renderDep">
                     <ul className={`renderList `}>
-                        {sessoes && sessoes.map((section) => (
-                            <li key={section.id} >
-                                <div >
-                                    <button className={`renderButton `} onClick={() => { exiberDescricao(section.id) }}>
-                                        {section.sectionName}</button>
-                                </div>
-                            </li>
-                        ))}
+                        {<li>{sessionObj && sessionObj.sectionName}</li>}
                     </ul>
                     {/* Adcionar Departamento */}
                     <div>

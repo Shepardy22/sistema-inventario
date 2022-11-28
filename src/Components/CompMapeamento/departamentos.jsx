@@ -11,15 +11,16 @@ import departamentos from "./departamento.scss";
 
 export default function Departamentos(props) {
 
-    const handle = props.handle;
-    const secId = props.sectionId;
-
+    const handle = props.handleDep;
+    const sectionObj = props.sectionObj;
+    const to = props.to;
+    
     
 
     const [departamentos, setDepartamentos] = useState([]);
     const [name, setName] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [sessionSelected, setSessionSelected] = useState(null);
+    const [selecionado, setselecionado] = useState(null);
     const [sectionList, setSectionList] = useState([]);
  
 
@@ -70,7 +71,7 @@ export default function Departamentos(props) {
     }
 
     function exiberDescricao(id) {
-        setSessionSelected(id);
+        setselecionado(id);
         function selecionarSessao(id) {
             const sessionRef = collection(db, 'Departamentos', `${id}`, 'Sessoes');
             const getData = async () => {
@@ -84,9 +85,17 @@ export default function Departamentos(props) {
         
         setDescricao(dep);
         selecionarSessao(id) 
+
         handle(id);
         
         
+    }
+    function selecaoSessao(id) {
+        const session = sectionList.find(session => session.id === id);
+        sectionObj(session);
+        to("Sessoes")
+        
+ 
     }
 
     return (
@@ -98,7 +107,7 @@ export default function Departamentos(props) {
                         {departamentos && departamentos.map((departamento) => (
                             <li key={departamento.id} >
                                 <div >
-                                    <button className={`renderButton ${sessionSelected === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
+                                    <button className={`renderButton ${selecionado === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
                                         {departamento.name}</button>
                                 </div>
                             </li>
@@ -120,7 +129,7 @@ export default function Departamentos(props) {
                 <div >
                     {   sectionList.length > 0  && sectionList.map((section) => (
                         <div key={section.id}>
-                            <button onClick={() => {secId(section.id)}} className="Sessoes">{section.sectionName}</button>
+                            <button onClick={() => {selecaoSessao(section.id)}} className="Sessoes">{section.sectionName}</button>
                         </div>
                     ))}
                     

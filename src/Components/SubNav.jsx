@@ -1,11 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './SubNav-Style.css';
+
+
+
 export default function SubNav(props) {
 
-    const [subMenu, setSubMenu] = useState('departamentos');
+    const navTo = props.to;
+    
 
-    function handleSubMenu(subMenu){
-        
+    const [subMenu, setSubMenu] = useState('');
+
+    useEffect(() => {
+        setSubMenu(navTo);
+    }, [navTo]);
+
+    
+    
+
+    function handleSubMenu(subMenu){   
         setSubMenu(subMenu)
         props.subMenu(subMenu);
     }

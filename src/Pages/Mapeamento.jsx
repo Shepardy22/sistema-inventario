@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
 import Areas from "../Components/CompMapeamento/Areas";
 import Departamentos from "../Components/CompMapeamento/departamentos";
 import Ranges from "../Components/CompMapeamento/Ranges";
@@ -10,20 +9,27 @@ import SubNav from "../Components/SubNav";
 export default function Mapeamento() {
 
     const [subMenu, setSubMenu] = useState('departamentos');
-    const [sessionSelected, setSessionSelected] = useState(null);
-    const [sessionId, setSessionId] = useState(null);
+    const [navSubMenu, setNavSubMenu] = useState('');
+    const [departamento, setdepartamento] = useState(null);
+    const [session, setSession] = useState(null);
+    
 
+    function handleNavSub(subMenu){  
+        setNavSubMenu(subMenu)
+        
+    }
     function handleSubMenu(subMenu) {
-        setSubMenu(subMenu);
+        setSubMenu(subMenu);  
+    }
+    function selecaoDepartamento(id){
+        setdepartamento(id)
+
+    }
+    function selecaoSessao(obj){
+        setSession(obj)
     }
 
-    function handleSetSection(id){
-        setSessionSelected(id)  
-    }
-
-    function handleSectionID(id){
-        setSessionId(id)
-    }
+    
 
 
     return (
@@ -39,8 +45,9 @@ export default function Mapeamento() {
                         submenu03='Ranges'
                         submenu04='Áreas'
 
-                        subMenu={handleSubMenu} />
-
+                        subMenu={handleSubMenu} 
+                        to={subMenu}/>
+                        
                     {/* Descrição Empresa Contratante */}
                     <div className='DescEmp'>
                         <span>Nome Empresa Contratante</span>
@@ -51,8 +58,15 @@ export default function Mapeamento() {
                 </div>
 
                 {/* Área de Renderização Condiçional */}
-                {subMenu === 'departamentos' && <Departamentos handle={handleSetSection} sectionId={handleSectionID}/>}
-                {subMenu === 'Sessoes' && <Sessoes sessionS={sessionSelected}  sessionID={sessionId}/>}
+                {subMenu === 'departamentos' && <Departamentos 
+                    handleDep={selecaoDepartamento} 
+                    sectionObj={selecaoSessao}
+                    to={handleSubMenu}
+                    />}
+
+                {subMenu === 'Sessoes' && <Sessoes 
+                    dep={departamento} 
+                    section={session}/>}
                 {subMenu === 'Ranges' && <Ranges />}
                 {subMenu === 'Áreas' && <Areas />}
                 
