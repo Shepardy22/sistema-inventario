@@ -1,7 +1,7 @@
 import Contagens from '../Components/CompPainel/Contagens';
 import NavBar from '../Components/NavBar';
 import SubNav from '../Components/SubNav';
-import './Painel.css';
+import  './Painel.css';
 
 export default function Painel() {
     return (

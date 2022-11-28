@@ -9,7 +9,13 @@ import departamentos from "./departamento.scss";
 
 
 
-export default function Departamentos() {
+export default function Departamentos(props) {
+
+    const handle = props.handle;
+    const secId = props.sectionId;
+
+    
+
     const [departamentos, setDepartamentos] = useState([]);
     const [name, setName] = useState('');
     const [descricao, setDescricao] = useState('');
@@ -78,6 +84,8 @@ export default function Departamentos() {
         
         setDescricao(dep);
         selecionarSessao(id) 
+        handle(id);
+        
         
     }
 
@@ -112,7 +120,7 @@ export default function Departamentos() {
                 <div >
                     {   sectionList.length > 0  && sectionList.map((section) => (
                         <div key={section.id}>
-                            <button onClick={() => {}} className="Sessoes">{section.sectionName}</button>
+                            <button onClick={() => {secId(section.id)}} className="Sessoes">{section.sectionName}</button>
                         </div>
                     ))}
                     

@@ -8,13 +8,17 @@ import TabelaDescSection from "../Tabelas/TabelaDescSection";
 
 
 
-export default function Sessoes() {
+export default function Sessoes(props) {
 
    
+    const departamentoID = props.sessionS;
+    const setId = props.sectionId;
+    
+    
     
     
 
-    const colectionRef = collection(db, 'Departamentos', 'hV3u0tQ1QXugkDf1vXqO', 'Sessoes');
+    const colectionRef = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes');
 
     const [name, setName] = useState('');
 
@@ -25,7 +29,6 @@ export default function Sessoes() {
         const getData = async () => {
             const data = await getDocs(colectionRef);
             setSessoes(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            
         }
         getData();
 
@@ -74,7 +77,7 @@ export default function Sessoes() {
                 </div>
             </div>
 
-            {/* Detalhes do Departamento */}
+            {/* Detalhes da Sessão */}
             <div>
                 visualizar Sessões
                 <div>

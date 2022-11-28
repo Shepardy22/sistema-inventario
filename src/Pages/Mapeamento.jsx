@@ -10,10 +10,21 @@ import SubNav from "../Components/SubNav";
 export default function Mapeamento() {
 
     const [subMenu, setSubMenu] = useState('departamentos');
+    const [sessionSelected, setSessionSelected] = useState(null);
+    const [sessionId, setSessionId] = useState(null);
 
     function handleSubMenu(subMenu) {
         setSubMenu(subMenu);
     }
+
+    function handleSetSection(id){
+        setSessionSelected(id)  
+    }
+
+    function handleSectionID(id){
+        setSessionId(id)
+    }
+
 
     return (
         <div className="Painel">
@@ -40,10 +51,11 @@ export default function Mapeamento() {
                 </div>
 
                 {/* Área de Renderização Condiçional */}
-                {subMenu === 'departamentos' && <Departamentos />}
+                {subMenu === 'departamentos' && <Departamentos handle={handleSetSection} sectionId={handleSectionID}/>}
+                {subMenu === 'Sessoes' && <Sessoes sessionS={sessionSelected}  sessionID={sessionId}/>}
                 {subMenu === 'Ranges' && <Ranges />}
                 {subMenu === 'Áreas' && <Areas />}
-                {subMenu === 'Sessoes' && <Sessoes />}
+                
 
 
             </div>
