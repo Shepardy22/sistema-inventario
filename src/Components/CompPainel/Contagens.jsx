@@ -83,7 +83,7 @@ export default function Contagens() {
                             <ul className='dep'>
                                 {departamentos && departamentos.map((dep) => (
                                     <li key={dep.id}>
-                                        <button onClick={() =>{getRanges(dep.id)}}>{dep.id}</button>    
+                                        <button onClick={() =>{getRanges(dep.id)}}>{dep.name}</button>    
                                     </li>
                                 ))}
                             </ul>

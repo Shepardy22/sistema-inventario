@@ -4,45 +4,30 @@
   
     width: 100vw;
     height: 100vh;
-    
-    padding: 4px;
-    
-    
     background-color: #030000;
   }
   
  .MainPainel{
- 
-  height: 85%;
   border-radius: 4px;
   background-color: #fff;
 
-  padding: 4px;
-  text-shadow: 0px 0.5px 1px ;
-
-  
 
  }
 
  .topPainel{
-  height: 15%;
-  
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border : 1px solid #000;
  }
 
  .DescEmp{
-  width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
   font-size: 0.8rem;
-
-  
  }
   
   

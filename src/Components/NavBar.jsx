@@ -1,12 +1,17 @@
 import "./NavBar-Style.css";
 import { Link } from "react-router-dom";
 
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
 export default function NavBar(props) {
 
     let selected = props.selected;
-    
 
-    return(
+
+    return (
         <div className='NavBar'>
                 <ul >
                     <li className={selected ==="painel" ? `Selected` : null}><Link to="/">Painel</Link></li>
@@ -19,7 +24,10 @@ export default function NavBar(props) {
 
                 <div className='User'>
                     Usuario Logado
-                </div>
+                </div> 
         </div>
-    ) 
+
+        
+
+    )
 }
