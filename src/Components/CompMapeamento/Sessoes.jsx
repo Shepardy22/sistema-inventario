@@ -1,5 +1,5 @@
 import React from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import { db } from "../../firebaseConfig";
@@ -34,8 +34,6 @@ export default function Sessoes(props) {
         const getData = async () => {
             const data = await getDocs(colectionRef);
             setSessoes(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            
-
         }
         getData();
         
@@ -44,7 +42,10 @@ export default function Sessoes(props) {
         
     }, []);
 
-    
+   async function removerSection() {
+     const response =  await deleteDoc(doc(db, "Departamentos", `${departamentoID}`, "Sessoes", `${sessionObj.id}`));
+       return response;
+    }
     
 
     return(
@@ -57,7 +58,7 @@ export default function Sessoes(props) {
                     <ul className={`renderList `}>
                         {<li>{sessionObj && sessionObj.sectionName}</li>}
                     </ul>
-                    {/* Adcionar Departamento */}
+                    {/* Adcionar Departamento
                     <div>
                         <p>Adicionar Sessão</p>
                         <input type="text"
@@ -67,7 +68,7 @@ export default function Sessoes(props) {
                         />
                         <button className="botaoAdd" onClick={()=>{}}>Adicionar</button>
                         <button className="botaoAdd" onClick={()=>{}}>Setar</button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div >
@@ -81,7 +82,7 @@ export default function Sessoes(props) {
                 <div>
                     <div className="Border">
                         <h4>{sessionSelected && sessionSelected.sectionName}</h4>
-                        {sessoes && (<button className="botaoAdd" onClick={() => { }}>Excluir Sessão</button>)}
+                        {sessoes && (<button className="botaoAdd" onClick={() => {removerSection() }}>Excluir Sessão</button>)}
                     </div>
                     <Row>
                         <TabelaDescSection desc={sessionSelected} />

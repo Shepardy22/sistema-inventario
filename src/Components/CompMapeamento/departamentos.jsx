@@ -138,7 +138,7 @@ export default function Departamentos(props) {
                         <button className="botaoAdd" onClick={setDep}>Setar</button>
                     </div>
                 </div>
-
+                                
                 <div >
                     {   sectionList.length > 0  ? sectionList.map((section) => (
                         <div key={section.id}>
