@@ -19,6 +19,7 @@ export default function Departamentos(props) {
 
     const [departamentos, setDepartamentos] = useState([]);
     const [name, setName] = useState('');
+    const [nameSection, setNameSection] = useState('');
     const [descricao, setDescricao] = useState('');
     const [selecionado, setselecionado] = useState(null);
     const [sectionList, setSectionList] = useState([]);
@@ -28,9 +29,8 @@ export default function Departamentos(props) {
         //criar snapshot
         const unsubscribe = onSnapshot(collection(db, 'Departamentos'), (snapshot) => {
             setDepartamentos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-        }
-        )
-        
+        })
+        return unsubscribe;
     }, []);
 
     async function deleteDep(id) {
@@ -56,16 +56,8 @@ export default function Departamentos(props) {
             responsavel: 'Dione',
             ultInventario: '18/07/2022',
             status: 'Validado',
-
-            areas: [
-                { area: 'Sessao 001' },
-                { area: 'Sessao 002' },
-                { area: 'Sessao 003' },
-                { area: 'Sessao 001' },
-                { area: 'Sessao 002' },
-                { area: 'Sessao 003' }
-            ]
         });
+        setName('');
     }
     function exiberDescricao(id) {
         setselecionado(id);
@@ -91,30 +83,25 @@ export default function Departamentos(props) {
         const session = sectionList.find(session => session.id === id);
         sectionObj(session);
         to("Sessoes")
-        
- 
     }
     function addSection(){
         const id = selecionado;
         addSectionAction({
-            sectionName: 'sessao005',
+            sectionName: nameSection,
             qntProdutos: 524,
             brutoTotal: 24348,
             responsavel: 'Dione',
             ultInventario: '18/07/2022',
             status: 'Validado',
-            ranges: [
-                { range: '010-020' },
-                { range: '021-030' },
-                { range: '031-042' }
-            ]}
+           }
         , id);
+        setNameSection('');
     }
 
     return (
         <div className="mainDep">
             <div className="topMain">
-
+                {/* Listagem dos Departamentos */}
                 <div className="renderDep">
                     <ul className={`renderList `}>
                         {departamentos && departamentos.map((departamento) => (
@@ -126,7 +113,7 @@ export default function Departamentos(props) {
                             </li>
                         ))}
                     </ul>
-                    {/* Adcionar Departamento */}
+                    {/* Adicionar Departamento */}
                     <div>
                         <p>Adicionar Departamento</p>
                         <input type="text"
@@ -138,15 +125,21 @@ export default function Departamentos(props) {
                         <button className="botaoAdd" onClick={setDep}>Setar</button>
                     </div>
                 </div>
-                                
+
+                {/* Sessões do Departamento */}           
                 <div >
                     {   sectionList.length > 0  ? sectionList.map((section) => (
                         <div key={section.id}>
                             <button onClick={() => {selecaoSessao(section.id)}} className="Sessoes">{section.sectionName}</button>
                         </div>
-                    )) : <button onClick={()=>{addSection()}} className="Sessoes">Adicionar Sessão</button>}
+                    )) : (<p>Nenhuma Sessão Cadastrada!</p>)}
                     
-
+                    <input type="text"
+                            placeholder="Nome da Sessão"
+                            value={nameSection}
+                            onChange={(e) => setNameSection(e.target.value)}
+                        />
+                    <button onClick={()=>{addSection()}} className="Sessoes addSection">Adicionar Sessão</button>
                 </div>
 
             </div>

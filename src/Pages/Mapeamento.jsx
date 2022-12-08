@@ -16,7 +16,6 @@ export default function Mapeamento() {
 
     function handleNavSub(subMenu){  
         setNavSubMenu(subMenu)
-        
     }
     function handleSubMenu(subMenu) {
         setSubMenu(subMenu);  
