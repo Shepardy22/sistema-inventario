@@ -12,6 +12,7 @@ export default function Mapeamento() {
     const [navSubMenu, setNavSubMenu] = useState('');
     const [departamento, setdepartamento] = useState(null);
     const [session, setSession] = useState(null);
+    const [range, setRange] = useState(null);
     
 
     function handleNavSub(subMenu){  
@@ -26,8 +27,12 @@ export default function Mapeamento() {
     }
     function selecaoSessao(obj){
         setSession(obj)
-    }
 
+    }
+    function selecaoRange(obj){
+        setRange(obj)
+        
+    }
     
 
 
@@ -65,9 +70,17 @@ export default function Mapeamento() {
 
                 {subMenu === 'Sessoes' && <Sessoes 
                     dep={departamento} 
-                    section={session}/>}
-                {subMenu === 'Ranges' && <Ranges />}
-                {subMenu === 'Áreas' && <Areas />}
+                    section={session}
+                    range={selecaoRange}
+                    to={handleSubMenu}/>}
+
+                {subMenu === 'Ranges' && <Ranges 
+                    dep={departamento} 
+                    section={session}
+                    range={range}/>}
+                    
+
+                {subMenu === 'Areas' && <Areas />}
                 
 
 

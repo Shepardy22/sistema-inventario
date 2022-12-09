@@ -1,0 +1,45 @@
+.renderButton{
+    border: none;
+    background-color: #ccc;
+    margin: 4px;
+    padding: 4px;
+    width: 118px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: 0 0 0 1px rgb(0, 0, 0);
+    list-style: none;
+
+    
+    &:hover{
+        background-color: #212529;
+        color: #fff;
+    }
+
+    
+    
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px rgb(0, 0, 0);
+    padding: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    list-style: none;
+}
+
+.renderAreas{
+    display: flex;
+}
+.selected{
+    background-color: #212529;
+    color: #fff;
+}

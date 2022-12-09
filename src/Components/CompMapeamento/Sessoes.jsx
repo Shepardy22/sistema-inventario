@@ -19,6 +19,7 @@ export default function Sessoes(props) {
    
     const departamentoID = props.dep;
     const sessionObj = props.section;
+    const rangeObj = props.range;
 
     const colectionRef = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes', );
 
@@ -54,46 +55,64 @@ export default function Sessoes(props) {
 
 
     const qntAreasCriar = rangeFinal - rangeInitial;
-   function addRange(){
+   
 
-        
-        console.log(qntAreasCriar);
-        setQntAreas(qntAreasCriar)
-         const body = {
-            nameRange: ` ${nameRange} ${rangeInitial}-${rangeFinal}`,
-            status: 'Mapeado',
-            qntProdutos: 12,
-            brutoTotal: 123123,
-         }
-        const idDep = departamentoID;
-        const idSection = sessionObj.id;
-        addRangeAcess(body, idDep, idSection); 
-   }
-
+   
    function addArea(){
-        const body = {
-        nomeArea: '0001',
-        status: 'Mapeado',
-        produtos: [
-            {
-                SKu: '',
-                nomeProduto: '',
-                qntProduto: 0,
-            }
-        ]
-    }
+
         const idDep = departamentoID;
         const idSection = sessionObj.id;
         const idRange = rangeSelected.id;
-        for (let i = 0; i < qntAreas; i++) {
+       let r = rangeInitial
+        for (let i = r; i <= rangeFinal; i++) {
+            const body = {
+                nomeArea: i ,
+                status: 'Mapeado',
+                produtos: [
+                    {
+                        SKu: '789456325412',
+                        nomeProduto: 'Batata Palha',
+                        qntProduto: 24,
+                    },
+                    {
+                        SKu: '7892256432333',
+                        nomeProduto: 'Molho de Tomate',
+                        qntProduto: 32,
+                    },
+                    {
+                        SKu: '78932569887421',
+                        nomeProduto: 'Arroz',
+                        qntProduto: 48,
+                    }
+                ]
+            }
             addAreasAction(body, idDep, idSection, idRange);
         }
         
         
    }
+   function addRange(){
+    setQntAreas(qntAreasCriar)
+     const body = {
+        nameRange: ` ${nameRange} ${rangeInitial}-${rangeFinal}`,
+        status: 'Mapeado',
+        qntProdutos: 12,
+        brutoTotal: 123123,
+     }
+    const idDep = departamentoID;
+    const idSection = sessionObj.id;
+    addRangeAcess(body, idDep, idSection); 
 
+    
+
+   
+}
+
+
+   const to = props.to;
    function navigation(props){
-       console.log(props);
+        rangeObj(props)
+        to("Ranges")
     }
 
    
@@ -111,6 +130,7 @@ export default function Sessoes(props) {
                     {/*Sessão List*/}
                     <div>
                         {sessoes && sessoes.map((item) => {
+
                                 return (
                                     <ul  key={item.id}>
                                         <li className={styles.list} >
@@ -118,7 +138,7 @@ export default function Sessoes(props) {
                                                 {item.nameRange}
                                             </button>
                                             
-                                             <span><button className={`${styles.renderButton}`} onClick={()=>{addArea()}}>Gerar Áreas</button></span>
+                                             <span><button className={`${styles.renderButton} ` } onClick={()=>{addArea()}}>Gerar Áreas</button></span>
                     
                                         </li>
                     
