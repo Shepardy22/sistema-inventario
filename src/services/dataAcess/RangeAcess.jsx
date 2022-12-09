@@ -7,3 +7,8 @@ export async function addAreasAcess(idDep, idSection, idRange, body) {
     return response;
 
 }
+
+export async function removeAreaAcess(idDep, idSection, idRange, idArea) {
+    const response = await deleteDoc(doc(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges", `${idRange}`, "Areas", `${idArea}`));
+    return response;
+}

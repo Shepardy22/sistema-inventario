@@ -36,8 +36,8 @@ export default function SubNav(props) {
                     <button className='botaoSub' onClick={()=>{handleSubMenu("Ranges")}}>{props.submenu03}
                     </button>
                 </li>
-                <li className={subMenu === "areas" ? "Selected" : null}>
-                    <button className='botaoSub' onClick={()=>{handleSubMenu("areas")}}>{props.submenu04}
+                <li className={subMenu === "Areas" ? "Selected" : null}>
+                    <button className='botaoSub' onClick={()=>{handleSubMenu("Areas")}}>{props.submenu04}
                     </button>
                 </li>
             </ul>
