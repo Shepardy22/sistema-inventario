@@ -70,17 +70,17 @@ export default function Sessoes(props) {
                 status: 'Mapeado',
                 produtos: [
                     {
-                        SKu: '789456325412',
+                        sku: '789456325412',
                         nomeProduto: 'Batata Palha',
                         qntProduto: 24,
                     },
                     {
-                        SKu: '7892256432333',
+                        sku: '7892256432333',
                         nomeProduto: 'Molho de Tomate',
                         qntProduto: 32,
                     },
                     {
-                        SKu: '78932569887421',
+                        sku: '78932569887421',
                         nomeProduto: 'Arroz',
                         qntProduto: 48,
                     }

@@ -11,19 +11,14 @@ export async function editAreaAcess(idDep, idSection, idRange, idArea, produtos,
     "Departamentos", `${idDep}`,
      "Sessoes", `${idSection}`,
       "Ranges", `${idRange}`,
-       "Areas", `${idArea}`,
-       );
-
-
+       "Areas", `${idArea}`,);
     const response = await updateDoc(responseRef, { 
         produtos: arrayUnion(produtos),
     });
-
-    
     return response;
 }
 
-export async function removeItemAcess(idDep, idSection, idRange, idArea, idItem) {
+export async function removeItemAcess(idDep, idSection, idRange, idArea, produtos) {
     const responseRef = await doc(db,
     "Departamentos", `${idDep}`,
      "Sessoes", `${idSection}`,
@@ -31,8 +26,8 @@ export async function removeItemAcess(idDep, idSection, idRange, idArea, idItem)
        "Areas", `${idArea}`,
     )
     await updateDoc(responseRef, {
-        //buscar o id do item e remover ele do array
-        
+        produtos: produtos,
+
 
     });
     

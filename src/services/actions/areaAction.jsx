@@ -12,7 +12,7 @@ export async function editAreaAction(idDep, idSection, idRange, idArea, produtos
     return response;
 }
 
-export async function removeItemAction(idDep, idSection, idRange, idArea, idItem) {
-    const response = await removeItemAcess(idDep, idSection, idRange, idArea, idItem);
+export async function removeItemAction(idDep, idSection, idRange, idArea, produtos) {
+    const response = await removeItemAcess(idDep, idSection, idRange, idArea, produtos);
     return response;
 }

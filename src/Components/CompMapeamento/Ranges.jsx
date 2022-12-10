@@ -44,9 +44,7 @@ export default function Ranges(props) {
             status: 'Mapeado',
             produtos: [
                 {
-                    SKu: '',
-                    nomeProduto: '',
-                    qntProduto: 0,
+                    
                 }
             ]
         }
@@ -101,7 +99,7 @@ export default function Ranges(props) {
                                     <tbody>
                                         {area && area.produtos.map((produto) =>  (  
                                             <tr key={produto.id}>
-                                                <td key={produto.id}>{produto.SKu}</td>
+                                                <td key={produto.id}>{produto.sku}</td>
                                                 <td key={produto.id}>{produto.nomeProduto}</td>
                                                 <td key={produto.id}>{produto.qntProduto}</td>
                                             </tr>
