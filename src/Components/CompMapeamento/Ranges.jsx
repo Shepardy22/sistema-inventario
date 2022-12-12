@@ -86,27 +86,28 @@ export default function Ranges(props) {
                     {area && (<h2>{area && area.nomeArea} <span>{area && area.status}</span></h2>)}
                     <h2>Produtos</h2>
                     <div className={styles.renderProdutos}>
-                        <div>
-                            
-                                <Table striped bordered hover variant="dark">
-                                    <thead>
-                                        <tr>
-                                            <th>SKU</th>
-                                            <th>Nome</th>
-                                            <th>Quantidade</th>
-                                        </tr>
+                        
+                            <Table striped bordered hover variant="dark">
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Nome</th>
+                                        <th>Quantidade</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {area && area.produtos.map((produto) =>  (  
-                                            <tr key={produto.id}>
-                                                <td key={produto.id}>{produto.sku}</td>
-                                                <td key={produto.id}>{produto.nomeProduto}</td>
-                                                <td key={produto.id}>{produto.qntProduto}</td>
-                                            </tr>
-                                            ))}
+                                        {area ? area.produtos.map((produto, index) =>(  
+                                            <tr key={index}>
+                                                <td>{produto.sku}</td>
+                                                <td>{produto.nomeProduto}</td>
+                                                <td>{produto.qntProduto}</td>
+                                            </tr>)) : 
+                                            <tr>
+                                                <td colSpan="3">Nenhuma área selecionada</td>
+                                            </tr>}
                                     </tbody>
                                 </Table>
-                        </div>
+                        
                     </div>
                     <div>
                         <button onClick={()=>{navigateTo()}} className={styles.renderButton}>+Info</button>

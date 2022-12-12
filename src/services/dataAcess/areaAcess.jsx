@@ -18,7 +18,7 @@ export async function editAreaAcess(idDep, idSection, idRange, idArea, produtos,
     return response;
 }
 
-export async function removeItemAcess(idDep, idSection, idRange, idArea, produtos) {
+export async function updateItemAcess(idDep, idSection, idRange, idArea, produtos) {
     const responseRef = await doc(db,
     "Departamentos", `${idDep}`,
      "Sessoes", `${idSection}`,

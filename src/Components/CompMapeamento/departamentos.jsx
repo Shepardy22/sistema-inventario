@@ -13,22 +13,19 @@ export default function Departamentos(props) {
 
     const handle = props.handleDep;
     const sectionObj = props.sectionObj;
-    const to = props.to;
-    
-    
+    const handleSubMenu = props.handleSubMenu;
 
-    const [departamentos, setDepartamentos] = useState([]);
     const [name, setName] = useState('');
     const [nameSection, setNameSection] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [selecionado, setselecionado] = useState(null);
+    const [IdDepSelecionado, setIdDepSelecionado] = useState(null);
     const [sectionList, setSectionList] = useState([]);
  
+    const [departamentos, setDepartamentos] = useState([]);
 
     useEffect(() => {
-        //criar snapshot
         const unsubscribe = onSnapshot(collection(db, 'Departamentos'), (snapshot) => {
-            setDepartamentos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+            setDepartamentos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))  
         })
         return unsubscribe;
     }, []);
@@ -60,7 +57,7 @@ export default function Departamentos(props) {
         setName('');
     }
     function exiberDescricao(id) {
-        setselecionado(id);
+        setIdDepSelecionado(id);
         function selecionarSessao(id) {
             const sessionRef = collection(db, 'Departamentos', `${id}`, 'Sessoes');
             const getData = async () => {
@@ -68,13 +65,11 @@ export default function Departamentos(props) {
                 setSectionList(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
             }
             getData();
-    
         }
+
         const dep = departamentos.find(dep => dep.id === id);
-        
         setDescricao(dep);
         selecionarSessao(id) 
-
         handle(id);
         
         
@@ -82,10 +77,10 @@ export default function Departamentos(props) {
     function selecaoSessao(id) {
         const session = sectionList.find(session => session.id === id);
         sectionObj(session);
-        to("Sessoes")
+        handleSubMenu("Sessoes")
     }
     function addSection(){
-        const id = selecionado;
+        const id = IdDepSelecionado;
         addSectionAction({
             sectionName: nameSection,
             qntProdutos: 524,
@@ -107,7 +102,7 @@ export default function Departamentos(props) {
                         {departamentos && departamentos.map((departamento) => (
                             <li key={departamento.id} >
                                 <div >
-                                    <button className={`renderButton ${selecionado === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
+                                    <button className={`renderButton ${IdDepSelecionado === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
                                         {departamento.name}</button>
                                 </div>
                             </li>

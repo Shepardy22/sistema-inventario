@@ -3,7 +3,6 @@ import { addDoc, collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "
 
 export async function addRangeAcess(body, idDep, idSection) {
     const response = await addDoc(collection(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges"), body);
-    alert(`${body.nameRange} adicionado com sucesso!`);
     return response;
 }
 

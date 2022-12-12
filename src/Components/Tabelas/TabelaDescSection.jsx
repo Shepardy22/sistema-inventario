@@ -1,9 +1,9 @@
 import Table from 'react-bootstrap/Table';
 
-function TabelaDescSection(desc) {
+function TabelaDescSection(props) {
 
   
-  const descricao = desc.desc;
+  const descricao = props.desc;
     
   
 
@@ -11,7 +11,6 @@ function TabelaDescSection(desc) {
     <Table striped bordered hover variant="dark">
       <thead>
         <tr>
-          
           <th>Quantidade Sessoes</th>
           <th>Quantidade Produtos</th>
           <th>Bruto Total</th>
@@ -29,11 +28,10 @@ function TabelaDescSection(desc) {
           <th>Status</th>
         </tr>
         <tr>
-        <td>{descricao && descricao.responsavel}</td>
-        <td>{descricao && descricao.ultInventario}</td>
-        <td>{descricao && descricao.status}</td>
+          <td>{descricao && descricao.responsavel}</td>
+          <td>{descricao && descricao.ultInventario}</td>
+          <td>{descricao && descricao.status}</td>
         </tr>
-        
       </tbody>
     </Table>
   );

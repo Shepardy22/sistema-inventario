@@ -18,50 +18,50 @@ export default function Sessoes(props) {
 
    
     const departamentoID = props.dep;
+    const sessionID = props.section.id;
     const sessionObj = props.section;
-    const rangeObj = props.range;
+    const rangeHandle = props.range;
 
     const colectionRef = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes', );
 
     const [name, setName] = useState('');
 
-    const [sessoes, setSessoes] = useState([]);
+    
     const [sessionSelected, setSessionSelected] = useState(null);
     const [rangeSelected, setRangeSelected] = useState(null);
 
     const [nameRange, setNameRange] = useState('');
-    const [rangeInitial, setRangeInitial] = useState(0);
+    
     const [rangeFinal, setRangeFinal] = useState(0);
 
     const [qntAreas, setQntAreas] = useState(0);
     
+    const [sessoes, setSessoes] = useState([]);
 
     useEffect (() => {
-        //criar snapshot
-        const unsubscribe = onSnapshot(collection(db,'Departamentos', `${departamentoID}`, 'Sessoes', `${sessionObj.id}`, 'Ranges'), (snapshot) => {
+        const unsubscribe = onSnapshot(collection(db,
+            'Departamentos', `${departamentoID}`,
+            'Sessoes', `${sessionID}`,
+            'Ranges'),
+           (snapshot) => {
             setSessoes(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            //console.log(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
         })
         
         return unsubscribe;
     }, []);
 
-    function removerSection(rangeId) {
+    function removerRange(id) {
         const idDep = departamentoID;
-        const idSection = sessionObj.id;
-        const idRange = rangeId;
+        const idSection = sessionID;
+        const idRange = id;
         removeRangeAction(idDep, idSection, idRange);
     }
 
-
-    const qntAreasCriar = rangeFinal - rangeInitial;
+    const [rangeInitial, setRangeInitial] = useState(0);
+        async function addArea(item){
    
-
-   
-   function addArea(){
-
         const idDep = departamentoID;
-        const idSection = sessionObj.id;
+        const idSection = sessionID.id;
         const idRange = rangeSelected.id;
        let r = rangeInitial
         for (let i = r; i <= rangeFinal; i++) {
@@ -91,6 +91,50 @@ export default function Sessoes(props) {
         
         
    }
+
+   const qntAreasCriar = rangeFinal - rangeInitial;
+   const [geradorAreas, setGeradorAreas] = useState(false);
+
+   function gerarAreas(item){
+    setRangeSelected(item);
+    
+
+    let idDep = departamentoID;
+    let idSection = sessionID;
+    let idRange = item.id;
+
+    if(geradorAreas === true){
+
+        let r = rangeInitial
+         for (let i = r; i <= rangeFinal; i++) {
+            const body = {
+                    nomeArea: i ,
+                    status: 'Mapeado',
+                    produtos: [
+                        {
+                            sku: '789456325412',
+                            nomeProduto: 'Batata Palha',
+                            qntProduto: 24,
+                        },
+                        {
+                            sku: '7892256432333',
+                            nomeProduto: 'Molho de Tomate',
+                            qntProduto: 32,
+                        },
+                        {
+                            sku: '78932569887421',
+                            nomeProduto: 'Arroz',
+                            qntProduto: 48,
+                        }
+                    ]
+            }
+            addAreasAction(body, idDep, idSection, idRange);
+        }  
+        setGeradorAreas(false);
+    }
+}
+
+   
    function addRange(){
     setQntAreas(qntAreasCriar)
      const body = {
@@ -100,19 +144,27 @@ export default function Sessoes(props) {
         brutoTotal: 123123,
      }
     const idDep = departamentoID;
-    const idSection = sessionObj.id;
+    const idSection = sessionID;
     addRangeAcess(body, idDep, idSection); 
 
+    setGeradorAreas(true);
     
-
    
+                
+     
 }
 
+    
+    function rangeSection(item){
+       
+        gerarAreas(item)
+    }
+    
 
-   const to = props.to;
+   const handleSubMenu = props.handleSubMenu;
    function navigation(props){
-        rangeObj(props)
-        to("Ranges")
+        rangeHandle(props)
+        handleSubMenu("Ranges")
     }
 
    
@@ -130,15 +182,14 @@ export default function Sessoes(props) {
                     {/*Sessão List*/}
                     <div>
                         {sessoes && sessoes.map((item) => {
-
                                 return (
                                     <ul  key={item.id}>
                                         <li className={styles.list} >
-                                            <button className={`${styles.renderButton} ${rangeSelected && rangeSelected.id === item.id && styles.selected}`}onClick={()=>{setRangeSelected(item)}}>
-                                                {item.nameRange}
+                                            <button className={`${styles.renderButton} `}
+                                                onClick={()=>{gerarAreas(item)}}>
+                                                    {item.nameRange}
                                             </button>
                                             
-                                             <span><button className={`${styles.renderButton} ` } onClick={()=>{addArea()}}>Gerar Áreas</button></span>
                     
                                         </li>
                     
@@ -180,10 +231,10 @@ export default function Sessoes(props) {
                     <div className="Border">
                         <h4>{rangeSelected && rangeSelected.nameRange}</h4>
                         
-                        {sessoes && (<button className="botaoAdd" onClick={() => {removerSection(rangeSelected.id) }}>Excluir Range</button>)}
+                        {sessoes && (<button className="botaoAdd" onClick={() => {removerRange(rangeSelected.id) }}>Excluir Range</button>)}
                     </div>
                     <Row>
-                        <TabelaDescSection desc={sessionSelected} />
+                        <TabelaDescSection desc={rangeSelected} />
                     </Row>
                 </div>
 

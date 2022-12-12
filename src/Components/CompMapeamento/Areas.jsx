@@ -2,32 +2,28 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { db } from "../../firebaseConfig";
-import { editAreaAction, getAreaAction, removeItemAction } from "../../services/actions/areaAction";
+import { editAreaAction, getAreaAction, updateItemAction } from "../../services/actions/areaAction";
 import { getAreaAcess } from "../../services/dataAcess/areaAcess";
 
 export default function Areas(props) {
 
-    const area = props.area
+    
     const idDep = props.dep
     const idSection = props.section.id
     const idRange = props.range.id
     const idArea = props.area.id
+    const area = props.area
 
     const [produtos, setProdutos] = useState([]);
-
-    useEffect(() => {
-            if(area){
-                setProdutos(area.produtos)
-                
-            }
-    }, [area]);
-
-
     const [sku, setsku] = useState('');
     const [nomeProduto, setNomeProduto] = useState('');
     const [qntProduto, setQntProduto] = useState(0);
 
-    
+    useEffect(() => {
+            if(area){
+                setProdutos(area.produtos) 
+            }
+    }, [area]);
 
     function criarProduto(){
         const produtos = {
@@ -38,38 +34,37 @@ export default function Areas(props) {
         editAreaAction(idDep, idSection, idRange, idArea, produtos )
         setsku('')
         setNomeProduto('')
-        setQntProduto('')
-        
+        setQntProduto('')  
     }
 
     function selectProdutos(sku){
-        
-        
+
         const areaSelecionada = produtos.find((item) => item.sku === sku)
         
         setsku(areaSelecionada.sku)
         setNomeProduto(areaSelecionada.nomeProduto)
         setQntProduto(areaSelecionada.qntProduto)
-
     }
 
      function AtualizaItem(){
         
         const produtos = area.produtos;
+        console.log(produtos)
         const areaSelecionada = area.produtos.find((item) => item.sku === sku);
+        
 
         areaSelecionada.sku = sku;
         areaSelecionada.nomeProduto = nomeProduto;
         areaSelecionada.qntProduto = qntProduto;
-
-       
-        removeItemAction(idDep, idSection, idRange, idArea, produtos)
-        setProdutos(area.produtos)
+        
+        updateItemAction(idDep, idSection, idRange, idArea, produtos)
+        setProdutos(produtos)
         setsku('')
         setNomeProduto('')
         setQntProduto('')
-       
+        
     }
+
     function removeArea(sku){
         
         const areaSelecionada = produtos.findIndex((item) => item.sku === sku)
@@ -78,7 +73,7 @@ export default function Areas(props) {
         setsku('')
         setNomeProduto('')
         setQntProduto('')
-        removeItemAction(idDep, idSection, idRange, idArea, produtos)
+        updateItemAction(idDep, idSection, idRange, idArea, produtos)
     
     }
    

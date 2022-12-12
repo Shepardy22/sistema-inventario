@@ -8,23 +8,22 @@ import SubNav from "../Components/SubNav";
 
 export default function Mapeamento() {
 
-    const [subMenu, setSubMenu] = useState('departamentos');
-    const [navSubMenu, setNavSubMenu] = useState('');
+    
+    
     const [departamento, setdepartamento] = useState(null);
     const [session, setSession] = useState(null);
     const [range, setRange] = useState(null);
     const [area, setArea] = useState(null);
-    
 
-    function handleNavSub(subMenu){  
-        setNavSubMenu(subMenu)
-    }
+    //SubMenu Navbar Handler
+    const [subMenu, setSubMenu] = useState('departamentos');
+
     function handleSubMenu(subMenu) {
         setSubMenu(subMenu);  
     }
+
     function selecaoDepartamento(id){
         setdepartamento(id)
-
     }
     function selecaoSessao(obj){
         setSession(obj)
@@ -46,7 +45,7 @@ export default function Mapeamento() {
             
 
             <div className='MainPainel'>
-                {/* SubNav e Descrição da Empresa */}
+                
                 <div className='topPainel'>
                     <SubNav submenu01='Departamentos'
                         submenu02='Sessoes'
@@ -56,7 +55,7 @@ export default function Mapeamento() {
                         subMenu={handleSubMenu} 
                         to={subMenu}/>
                         
-                    {/* Descrição Empresa Contratante */}
+                    
                     <div className='DescEmp'>
                         <span>Nome Empresa Contratante</span>
                         <span>CNPJ: XXXXXXXXXXX</span>
@@ -69,14 +68,14 @@ export default function Mapeamento() {
                 {subMenu === 'departamentos' && <Departamentos 
                     handleDep={selecaoDepartamento} 
                     sectionObj={selecaoSessao}
-                    to={handleSubMenu}
+                    handleSubMenu={handleSubMenu}
                     />}
 
                 {subMenu === 'Sessoes' && <Sessoes 
                     dep={departamento} 
                     section={session}
                     range={selecaoRange}
-                    to={handleSubMenu}/>}
+                    handleSubMenu={handleSubMenu}/>}
 
                 {subMenu === 'Ranges' && <Ranges 
                     dep={departamento} 
