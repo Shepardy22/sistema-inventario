@@ -10,13 +10,13 @@ export default function Mapeamento() {
 
     
     
-    const [departamento, setdepartamento] = useState(null);
-    const [session, setSession] = useState(null);
-    const [range, setRange] = useState(null);
-    const [area, setArea] = useState(null);
+    const [departamento, setdepartamento]   = useState(null);
+    const [session, setSession]             = useState(null);
+    const [range, setRange]                 = useState(null);
+    const [area, setArea]                   = useState(null);
 
     //SubMenu Navbar Handler
-    const [subMenu, setSubMenu] = useState('departamentos');
+    const [subMenu, setSubMenu]             = useState('departamentos');
 
     function handleSubMenu(subMenu) {
         setSubMenu(subMenu);  
@@ -40,59 +40,55 @@ export default function Mapeamento() {
 
 
     return (
-        <div className="Painel">
-            <NavBar selected='mapeamento' />
+        <div className                      = "">
+            <NavBar selected                = 'mapeamento' />
             
 
-            <div className='MainPainel'>
+            <div className                  = 'MainPainel '>
                 
-                <div className='topPainel'>
-                    <SubNav submenu01='Departamentos'
-                        submenu02='Sessoes'
-                        submenu03='Ranges'
-                        submenu04='Áreas'
+                <div className              = 'topPainel'>
+                    <SubNav submenu01       = 'Departamentos'
+                        submenu02           = 'Sessoes'
+                        submenu03           = 'Ranges'
+                        submenu04           = 'Áreas'
 
-                        subMenu={handleSubMenu} 
-                        to={subMenu}/>
+                        subMenu             = {handleSubMenu}
+                        to                  = {subMenu}/>
                         
                     
-                    <div className='DescEmp'>
-                        <span>Nome Empresa Contratante</span>
-                        <span>CNPJ: XXXXXXXXXXX</span>
-                        <span>Data: xy/xy/xy</span>
-                    </div>
+                    
+                    
 
                 </div>
 
                 {/* Área de Renderização Condiçional */}
-                {subMenu === 'departamentos' && <Departamentos 
-                    handleDep={selecaoDepartamento} 
-                    sectionObj={selecaoSessao}
-                    handleSubMenu={handleSubMenu}
-                    />}
-
-                {subMenu === 'Sessoes' && <Sessoes 
-                    dep={departamento} 
-                    section={session}
-                    range={selecaoRange}
-                    handleSubMenu={handleSubMenu}/>}
-
-                {subMenu === 'Ranges' && <Ranges 
-                    dep={departamento} 
-                    section={session}
-                    range={range}
-                    area={selecaoArea}
-                    to={handleSubMenu}/>}
+                <div className="">
+                    {subMenu === 'departamentos' && <Departamentos
+                        handleDep               = {selecaoDepartamento}
+                        sectionObj              = {selecaoSessao}
+                        handleSubMenu           = {handleSubMenu}
+                        />}
+                    {subMenu === 'Sessoes' && <Sessoes
+                        dep                     = {departamento}
+                        section                 = {session}
+                        range                   = {selecaoRange}
+                        handleSubMenu           = {handleSubMenu}/>}
+                    {subMenu === 'Ranges' && <Ranges
+                        dep                     = {departamento}
+                        section                 = {session}
+                        range                   = {range}
+                        area                    = {selecaoArea}
+                        to                      = {handleSubMenu}/>}
                     
-
-                {subMenu === 'Areas' && <Areas
-                    dep={departamento}
-                    section={session}
-                    range={range}
-                    area={area}
-                    to={handleSubMenu}
-                />}
-                
+                    {subMenu === 'Areas' && <Areas
+                        dep                     = {departamento}
+                        section                 = {session}
+                        range                   = {range}
+                        area                    = {area}
+                        to                      = {handleSubMenu}
+                    />}
+                    
+                </div>
 
 
             </div>

@@ -24,17 +24,11 @@ export default function Sessoes(props) {
 
     const colectionRef = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes', );
 
-    const [name, setName] = useState('');
-
-    
-    const [sessionSelected, setSessionSelected] = useState(null);
     const [rangeSelected, setRangeSelected] = useState(null);
 
     const [nameRange, setNameRange] = useState('');
     
     const [rangeFinal, setRangeFinal] = useState(0);
-
-    const [qntAreas, setQntAreas] = useState(0);
     
     const [sessoes, setSessoes] = useState([]);
 
@@ -56,110 +50,64 @@ export default function Sessoes(props) {
         const idRange = id;
         removeRangeAction(idDep, idSection, idRange);
     }
+    function removerSession(id) {
+        const idDep = departamentoID;
+        const idSection = id;
+        //removeSessionAction(idDep, idSection);
+    }
 
     const [rangeInitial, setRangeInitial] = useState(0);
-        async function addArea(item){
-   
-        const idDep = departamentoID;
-        const idSection = sessionID.id;
-        const idRange = rangeSelected.id;
-       let r = rangeInitial
-        for (let i = r; i <= rangeFinal; i++) {
-            const body = {
-                nomeArea: i ,
-                status: 'Mapeado',
-                produtos: [
-                    {
-                        sku: '789456325412',
-                        nomeProduto: 'Batata Palha',
-                        qntProduto: 24,
-                    },
-                    {
-                        sku: '7892256432333',
-                        nomeProduto: 'Molho de Tomate',
-                        qntProduto: 32,
-                    },
-                    {
-                        sku: '78932569887421',
-                        nomeProduto: 'Arroz',
-                        qntProduto: 48,
-                    }
-                ]
-            }
-            addAreasAction(body, idDep, idSection, idRange);
-        }
-        
-        
-   }
-
-   const qntAreasCriar = rangeFinal - rangeInitial;
-   const [geradorAreas, setGeradorAreas] = useState(false);
-
+    const [geradorAreas, setGeradorAreas] = useState(false);
    function gerarAreas(item){
-    setRangeSelected(item);
+        setRangeSelected(item);
     
 
-    let idDep = departamentoID;
-    let idSection = sessionID;
-    let idRange = item.id;
+        let idDep = departamentoID;
+        let idSection = sessionID;
+        let idRange = item.id;
 
-    if(geradorAreas === true){
-
-        let r = rangeInitial
-         for (let i = r; i <= rangeFinal; i++) {
-            const body = {
-                    nomeArea: i ,
-                    status: 'Mapeado',
-                    produtos: [
-                        {
-                            sku: '789456325412',
-                            nomeProduto: 'Batata Palha',
-                            qntProduto: 24,
-                        },
-                        {
-                            sku: '7892256432333',
-                            nomeProduto: 'Molho de Tomate',
-                            qntProduto: 32,
-                        },
-                        {
-                            sku: '78932569887421',
-                            nomeProduto: 'Arroz',
-                            qntProduto: 48,
-                        }
-                    ]
-            }
-            addAreasAction(body, idDep, idSection, idRange);
-        }  
-        setGeradorAreas(false);
+        if(geradorAreas === true){
+            let r = rangeInitial
+            for (let i = r; i <= rangeFinal; i++) {
+                const body = {
+                        nomeArea: i ,
+                        status: 'Mapeado',
+                        produtos: [
+                            {
+                                sku: '789456325412',
+                                nomeProduto: 'Batata Palha',
+                                qntProduto: 24,
+                            },
+                            {
+                                sku: '7892256432333',
+                                nomeProduto: 'Molho de Tomate',
+                                qntProduto: 32,
+                            },
+                            {
+                                sku: '78932569887421',
+                                nomeProduto: 'Arroz',
+                                qntProduto: 48,
+                            }
+                        ]
+                }
+                addAreasAction(body, idDep, idSection, idRange);
+            }  
+            setGeradorAreas(false);
+        }
     }
-}
 
-   
-   function addRange(){
-    setQntAreas(qntAreasCriar)
-     const body = {
-        nameRange: ` ${nameRange} ${rangeInitial}-${rangeFinal}`,
-        status: 'Mapeado',
-        qntProdutos: 12,
-        brutoTotal: 123123,
-     }
-    const idDep = departamentoID;
-    const idSection = sessionID;
-    addRangeAcess(body, idDep, idSection); 
-
-    setGeradorAreas(true);
-    
-   
-                
-     
-}
-
-    
-    function rangeSection(item){
-       
-        gerarAreas(item)
+   function addRange(){ 
+        const body = {
+            nameRange: ` ${nameRange} ${rangeInitial}-${rangeFinal}`,
+            status: 'Mapeado',
+            qntProdutos: 12,
+            brutoTotal: 123123,
+        }
+        const idDep = departamentoID;
+        const idSection = sessionID;
+        addRangeAcess(body, idDep, idSection); 
+        setGeradorAreas(true); 
     }
-    
 
    const handleSubMenu = props.handleSubMenu;
    function navigation(props){
@@ -169,18 +117,13 @@ export default function Sessoes(props) {
 
    
     return(
-       
-        
         <div className="">
-            <div className="">
-                
-                
-                {<h2>{sessionObj && sessionObj.sectionName}</h2>}  
-                
+            <div className=''>
+                {<h2 className={`bg-orange-500 w-2/4 pl-2 rounded-sm ${styles.sectionTitle}`}>{sessionObj && sessionObj.sectionName}</h2>}  
 
-                <div className={styles.sessaoRenderFlex}>
+                <div className={`${styles.sessaoRenderFlex} `}>
                     {/*Sessão List*/}
-                    <div>
+                    <div className={`bg-slate-700 w-2/4 ${styles.sectionTitle}`}  >
                         {sessoes && sessoes.map((item) => {
                                 return (
                                     <ul  key={item.id}>
@@ -189,13 +132,8 @@ export default function Sessoes(props) {
                                                 onClick={()=>{gerarAreas(item)}}>
                                                     {item.nameRange}
                                             </button>
-                                            
-                    
                                         </li>
-                    
                                     </ul>
-                    
-                    
                             )})
                         }
                     </div>
@@ -203,22 +141,20 @@ export default function Sessoes(props) {
                         {/*Descrição da Sessão */}
                     <div className={styles.sectionRenderDescription} onClick={()=>{navigation(rangeSelected)}}>
                         <h3>Descrição do Range</h3>
-                    
-                        {rangeSelected && (
-                        <div>
-                            <div>{rangeSelected.id}</div>
-                            <div>{rangeSelected.status}</div>
-                        </div>
-                        )}
-                    
+                            {rangeSelected && (
+                            <div>
+                                <div>{rangeSelected.id}</div>
+                                <div>{rangeSelected.status}</div>
+                            </div>
+                            )}
                     </div>
                 </div>
 
-                <div>
-                    <input type="text" value={nameRange} onChange={e => (setNameRange(e.target.value))}/>
-                    <input type="number" value={rangeInitial} onChange={(e)=>{setRangeInitial(e.target.value)}} />
-                    <input type="number" value={rangeFinal} onChange={(e)=>{setRangeFinal(e.target.value)}} />
-                    <button className={`${styles.renderButton}`} onClick={()=>{addRange()}}>Adicionar Range</button>
+                <div className={`bg-gray-800 w-2/4 flex items-center ${styles.sectionTitle}`} >
+                    <input className=" border h-8 w-32 mx-2" type="text" value={nameRange} onChange={e => (setNameRange(e.target.value))}/>
+                    <input className=" border h-8 w-32 mx-2" type="number" value={rangeInitial} onChange={(e)=>{setRangeInitial(e.target.value)}} />
+                    <input className=" border h-8 w-32 mx-2" type="number" value={rangeFinal} onChange={(e)=>{setRangeFinal(e.target.value)}} />
+                    <button className={`${styles.renderButton} `} onClick={()=>{addRange()}}>Adicionar Range</button>
                 </div>
 
 

@@ -30,6 +30,17 @@ function TabelaDescDep(desc) {
           <td>{descricao.ultInventario}</td>
           <td>{descricao.status}</td>
         </tr>
+        <tr>
+          <th>+Info</th>
+          <th>+Info</th>
+          <th>+Info</th>
+        </tr>
+        <tr>
+          <td>+descricao</td>
+          <td>+descricao</td>
+          <td>+descricao</td>
+        </tr>
+        
       </tbody>
     </Table>
   );

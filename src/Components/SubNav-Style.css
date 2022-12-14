@@ -1,8 +1,8 @@
 .SubNav{
-    width: 60%; 
-    height: 15%;
-    box-shadow: 0.5px 1px 2px;
+  
+    box-shadow: 2px 2px 8px;
     border-radius: 5px;
+    background-color: #353030;
 
 }
 
@@ -18,10 +18,7 @@
     
     list-style: none;
     padding: 0;
-    margin: 0;
-
-    
-    
+    margin: 0;   
 }
 
 
@@ -37,11 +34,5 @@
      
 }
 
-.botaoSub{
-    padding: 8px;
-    background-color: #fff;
-    border: none;
-    cursor: pointer;
-    
-}
+
     
