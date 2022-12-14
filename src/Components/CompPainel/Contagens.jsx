@@ -7,8 +7,6 @@ import { db } from '../../firebaseConfig';
 
 export default function Contagens() {
 
-
-
     const [departamentos, setDepartamentos] = useState([]);
     const [rangesDepartamentos, setRangesDepartamentos] = useState([]);
     const [areas, setAreas] = useState([]);
@@ -21,7 +19,6 @@ export default function Contagens() {
  
  // eslint-disable-next-line no-unused-vars
  let area = 'area001';
-    // Ao carregar o componente, faz a leitura dos dados do firebase e traz o Primeiro menu Departamentos
     useEffect(() => {
 
         const getData = async () => {
@@ -32,9 +29,6 @@ export default function Contagens() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Ao selecionar um departamento, faz a leitura dos dados do firebase 
-    //e traz uma segunda Lista de Ranges de Departamentos
-    // props = id do departamento selecionado dep001, dep002, dep003
     function getRanges(props){
             setDep(props);
         

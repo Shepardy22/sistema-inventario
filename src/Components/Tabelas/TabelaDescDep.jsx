@@ -9,7 +9,6 @@ function TabelaDescDep(desc) {
     <Table striped bordered hover variant="dark">
       <thead>
         <tr>
-          
           <th>Quantidade Sessoes</th>
           <th>Quantidade Produtos</th>
           <th>Bruto Total</th>
@@ -27,9 +26,19 @@ function TabelaDescDep(desc) {
           <th>Status</th>
         </tr>
         <tr>
-        <td>{descricao.responsavel}</td>
-        <td>{descricao.ultInventario}</td>
-        <td>{descricao.status}</td>
+          <td>{descricao.responsavel}</td>
+          <td>{descricao.ultInventario}</td>
+          <td>{descricao.status}</td>
+        </tr>
+        <tr>
+          <th>+Info</th>
+          <th>+Info</th>
+          <th>+Info</th>
+        </tr>
+        <tr>
+          <td>+descricao</td>
+          <td>+descricao</td>
+          <td>+descricao</td>
         </tr>
         
       </tbody>

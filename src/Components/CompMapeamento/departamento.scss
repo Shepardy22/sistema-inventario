@@ -1,5 +1,31 @@
 
+.depList{
+    box-shadow: 2px 2px 8px;
+    
+}
 
+.hoverButton{
+    background-color: #94a3b8;
+    color: #1f2937;
+    transition: 0.5s;
+    font-weight: 500;
+
+    &:hover{
+        background-color: #1f2937;
+        color: #9ca3af;
+        
+    }
+
+    
+}
+.depItem{
+    background-color: #2C3034;
+}
+.selected{
+    background-color: #1f2937;
+    color: #9ca3af;
+    border: 0.5px solid #9ca3af;
+}
 
 .mainDep{
     
@@ -22,7 +48,9 @@
         flex-direction: column;
         width: 70%;
         
+        
 
+        
         .renderList{
             
             list-style: none;
@@ -111,3 +139,8 @@
     }
 
 } 
+
+.renderDesc{
+    box-shadow: 2px 2px 8px
+    
+}
