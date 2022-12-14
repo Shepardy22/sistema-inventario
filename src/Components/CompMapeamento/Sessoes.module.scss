@@ -1,10 +1,5 @@
 
-.list{
-    list-style: none;
 
-
-
-}
 
 .sectionTitle{
     box-shadow: 2px 2px 8px;
@@ -18,24 +13,7 @@
     display: flex;
     justify-content: space-between;
 
-    .sectionRenderDescription{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin: 4px;
-        padding: 4px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: 0.5s;
-        box-shadow: 0 0 0 1px rgb(0, 0, 0);
-        list-style: none;
-        margin-right: 10%;
-
-        &:hover{
-            background-color: #212529;
-            color: #fff;
-        }
-    }
+    
 }
 
 .renderButton{
@@ -70,4 +48,10 @@
 
 .areaGerada{
     display: none;
+}
+
+.sectionRenderDescription{
+    background-color: #212529;
+    box-shadow: 2px 2px 8px;
+    
 }

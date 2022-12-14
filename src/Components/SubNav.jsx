@@ -36,7 +36,7 @@ export default function SubNav(props) {
                       </button>
                 </li>
                 <li className={`${subMenu === "Sessoes" ? "Selected" : null} sm:mx-4`}>
-                      <button className=' px-2 text-gray-300 hidden sm:flex' onClick={()=>{handleSubMenu("Sessoes")}}>{props.submenu02}
+                      <button className=' px-2 text-gray-300' onClick={()=>{handleSubMenu("Sessoes")}}>{props.submenu02}
                     </button></li>
                 <li className={`${subMenu === "Ranges" ? "Selected" : null} sm:mx-4`}>
                       <button className=' px-2 text-gray-300 hidden sm:flex ' onClick={()=>{handleSubMenu("Ranges")}}>{props.submenu03}
