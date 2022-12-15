@@ -113,7 +113,7 @@ export default function Departamentos(props) {
                                 <div key                    = {departamento.id}
                                     className               = {`bg-secondaryBg-100  flex justify-between px-2 ${IdDepSelecionado === departamento.id && '  border '}`} >
                                     <div className          = " ">
-                                        <button className   = {` h-12 m-1 px-2 rounded-md  hoverButton  ${IdDepSelecionado === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
+                                        <button className   = {` h-12 m-1 px-2 rounded-md  border renderDesc text-gray-300  ${IdDepSelecionado === departamento.id && 'selected '}`} onClick={() => { exiberDescricao(departamento.id) }}>
                                             {departamento.name}
                                         </button>
                                     </div>
