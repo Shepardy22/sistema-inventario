@@ -15,7 +15,7 @@ export default function Areas(props) {
     const area = props.area
 
     const [produtos, setProdutos] = useState([]);
-    const [sku, setsku] = useState('');
+    const [sku, setsku] = useState(0);
     const [nomeProduto, setNomeProduto] = useState('');
     const [qntProduto, setQntProduto] = useState(0);
 
@@ -32,9 +32,9 @@ export default function Areas(props) {
             qntProduto: qntProduto,
         }
         editAreaAction(idDep, idSection, idRange, idArea, produtos )
-        setsku('')
+        setsku(0)
         setNomeProduto('')
-        setQntProduto('')  
+        setQntProduto(0)  
     }
 
     function selectProdutos(sku){
@@ -44,6 +44,7 @@ export default function Areas(props) {
         setsku(areaSelecionada.sku)
         setNomeProduto(areaSelecionada.nomeProduto)
         setQntProduto(areaSelecionada.qntProduto)
+        
     }
 
      function AtualizaItem(){
@@ -59,9 +60,9 @@ export default function Areas(props) {
         
         updateItemAction(idDep, idSection, idRange, idArea, produtos)
         setProdutos(produtos)
-        setsku('')
+        setsku(0)
         setNomeProduto('')
-        setQntProduto('')
+        setQntProduto(0)
         
     }
 
@@ -94,9 +95,9 @@ export default function Areas(props) {
                     </thead>
                     <tbody>
                     <tr>
-                            <td><input onChange={e => {setsku(e.target.value)}} value={sku} type="num" placeholder="Codigo de Barras" /></td>
+                            <td><input onChange={e => {setsku(e.target.value)}} value={sku} type="number" placeholder="Codigo de Barras" /></td>
                             <td><input onChange={e => {setNomeProduto(e.target.value)}} value={nomeProduto} type="text" placeholder="Nome Produto" /></td>
-                            <td><input onChange={e => {setQntProduto(e.target.value)}} value={qntProduto} type="num" placeholder="Quantidade" /></td>
+                            <td><input onChange={e => {setQntProduto(e.target.value)}} value={qntProduto} type="number" placeholder="Quantidade" /></td>
                             <td><button onClick={()=>{criarProduto()}}>Adicionar Produto</button>
                                 <button onClick={()=>{AtualizaItem()}}>Atualizar</button>
                             </td>

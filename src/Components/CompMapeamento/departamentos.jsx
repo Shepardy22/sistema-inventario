@@ -107,13 +107,13 @@ export default function Departamentos(props) {
                                     <span className         = " font-bold text-gray-800">Status</span>
                                 </div>
 
-                        <div className                      = "">
+                        <div className                      = "bg-secondaryBg-100 ">
                                 {departamentos && departamentos.map((departamento) => (      
                             
                                 <div key                    = {departamento.id}
-                                    className               = {`bg-slate-700 flex justify-between px-2 ${IdDepSelecionado === departamento.id && '  border '}`} >
+                                    className               = {`bg-secondaryBg-100  flex justify-between px-2 ${IdDepSelecionado === departamento.id && '  border '}`} >
                                     <div className          = " ">
-                                        <button className   = {`bg-slate-400 h-12 m-1 px-2 rounded-md  hoverButton  ${IdDepSelecionado === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
+                                        <button className   = {` h-12 m-1 px-2 rounded-md  hoverButton  ${IdDepSelecionado === departamento.id && 'selected'}`} onClick={() => { exiberDescricao(departamento.id) }}>
                                             {departamento.name}
                                         </button>
                                     </div>
@@ -134,7 +134,7 @@ export default function Departamentos(props) {
                         </div>                                
                     </div>
                     {/* Adicionar Departamento */}
-                    <div className                          = "bg-gray-800">
+                    <div className                          = "bg-primaryBg-100">
                         <h3 className                       = "text-lg text-gray-400">Adicionar Departamento</h3>
                         <input type                         = "text"
                             placeholder                     = "Nome do Departamento"
@@ -150,7 +150,7 @@ export default function Departamentos(props) {
                 <div className                              = "border w-full   sm:w-2/4 m-1 rounded-sm depList bg-orange-500">
                     <h2 className                           = "text-lg  ml-4 font-bold text-gray-800 ">Sessões</h2>
 
-                    <div className                          = "flex bg-slate-700  h-3/4 	">
+                    <div className                          = "flex bg-secondaryBg-100  h-3/4 	">
                         <div className                      = " w-1/3 overflow-y-auto">
                             {   sectionList.length > 0  ? sectionList.map((section) => (
                                 <div key                    = {section.id}>
@@ -170,7 +170,7 @@ export default function Departamentos(props) {
                     </div>
                     
                     
-                    <div className                          = "bg-gray-800">
+                    <div className                          = "bg-primaryBg-100">
                         <input type                         = "text"
                                 placeholder                 = "Nome da Sessão"
                                 value                       = {nameSection}

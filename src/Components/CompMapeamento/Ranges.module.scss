@@ -1,13 +1,14 @@
 .renderButton{
     border: none;
-    background-color: #ccc;
+    
+    color: #212529;
     margin: 4px;
     padding: 4px;
     width: 118px;
     border-radius: 4px;
     cursor: pointer;
     transition: 0.5s;
-    box-shadow: 0 0 0 1px rgb(0, 0, 0);
+    box-shadow: 1px 1px 4px;
     list-style: none;
 
     
@@ -41,5 +42,10 @@
 }
 .selected{
     background-color: #212529;
-    color: #fff;
+    color: #fd7e14;
+    border: 1px solid #fff;
+}
+
+.boxShadow{
+    box-shadow: 1px 1px 4px;
 }
