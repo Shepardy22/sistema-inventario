@@ -18,7 +18,7 @@ export default function Ranges(props) {
     const [areaId, setAreaId]                                                       = useState(area.id);
     const [areaSelected, setAreaSelected]                                           = useState(null);
     const [areaNameCreate, setAreaNameCreate]                                       = useState('');
-    const [qntItens, setQntItens]=useState(0);
+    const [qntItens, setQntItens]                                                   = useState(0);
     const to                                                                        = props.to;
 
     useEffect(() => {
@@ -50,8 +50,8 @@ export default function Ranges(props) {
         }
         console.log(qntItens);
         const soma                                                                  = qntItens.reduce((a, b) => a + b, 0);
-        console.log(soma);
         setQntItens(soma);
+        console.log(soma);
         
       
 
@@ -98,7 +98,7 @@ export default function Ranges(props) {
             {/*Areas*/} 
             <div className                                                          = {`bg-primaryBg-100 w-full sm:w-1/2 mr-2 ${styles.boxShadow}`}>
                 <h3 className                                                       = {`bg-orange-500  p-2 ${styles.boxShadow}`}>
-                    {nomeRange && nomeRange}                        Produto Itens   = {areas && areas.qntProduto} 
+                    {nomeRange && nomeRange}                        Produto Itens   = {areas && areas.qntProduto}
                 </h3>
                 
                 {areas && areas.map((area) => (  
@@ -110,7 +110,7 @@ export default function Ranges(props) {
                         
                     </div>
                     ))}
-                    <div className="bg-secondaryBg-100 flex items-center ml-2">
+                    <div className                                                  = "bg-secondaryBg-100 flex items-center ml-2">
                         <input value                                                = {areaNameCreate} type="number" onChange={ (e)=>{setAreaNameCreate(e.target.value)}}
                         className                                                   = {`text-primaryBg-100 bg-gray-300 `} />
                         <button onClick                                             = {()=>{addArea()}} className={`bg-gray-300 ${styles.renderButton} ${areaId === area.id  && `text-orange-500 `}`}>Adicionar Área</button>
@@ -119,14 +119,14 @@ export default function Ranges(props) {
                     {/*Items*/}    
             <div className                                                          = {`w-full sm:w-1/2 ${styles.info} ${styles.boxShadow}`}>
                     {area && (
-                        <div className={`bg-orange-500 w-full flex justify-between p-2 rounded-md ${styles.boxShadow}`}>
-                            <div className="w-full flex justify-between">
+                        <div className                                              = {`bg-orange-500 w-full flex justify-between p-2 rounded-md ${styles.boxShadow}`}>
+                            <div className                                          = "w-full flex justify-between">
                                 <h4>Área {area && area.nomeArea}</h4>
-                                <h4> Status: {area && area.status}</h4>
+                                <h4> Status                                         : {area && area.status}</h4>
                             </div>
                         </div>
                     )}
-                    <h2 className="m-2">Produtos</h2>
+                    <h2 className                                                   = "m-2">Produtos</h2>
                     <div className                                                  = {`w-full`}>
                         
                             <Table striped bordered hover variant                   = "dark">
@@ -151,7 +151,7 @@ export default function Ranges(props) {
                                 </Table>
                         
                     </div>
-                    <div className="w-full flex justify-between ">
+                    <div className                                                  = "w-full flex justify-between ">
                         <button onClick                                             = {()=>{navigateTo()}} className={`bg-orange-500  ${styles.renderButton}`}>+Info</button>
                         <span>{qntItens}</span>
                         <button onClick                                             = {()=>{removeArea()}} className={`bg-gray-800 text-white ${styles.renderButton}`}>Deletar</button>

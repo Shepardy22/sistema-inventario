@@ -1,7 +1,7 @@
 import "./NavBar-Style.css";
 import { Link } from "react-router-dom";
 
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaTv } from 'react-icons/fa';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -16,7 +16,10 @@ export default function NavBar(props) {
             <ul className                   = {`w-full sm:w-3/4   border h-full flex justify-around items-center   rounded-md NavBar`}>
                 <li className               = {`${selected ==="painel" ? `Selected` : null} ` }>
                     <Link to                = "/">
-                        <button className   = "text-gray-300 ">Painel</button>
+                        
+                            
+                            <button className   = "text-gray-300 "><span className="flex gap-1"><FaTv className="my-auto"/>Painel</span></button>
+                        
                     </Link>
                 </li>
                 <li className               = {selected ==="mapeamento" ? `Selected ` : null}>
