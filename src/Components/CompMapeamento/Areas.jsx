@@ -1,10 +1,12 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { FaAlignCenter, FaAngleDoubleLeft, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { db } from "../../firebaseConfig";
 import { editAreaAction, getAreaAction, updateItemAction } from "../../services/actions/areaAction";
 import { getAreaAcess } from "../../services/dataAcess/areaAcess";
 
+import styles from "./Areas.module.css";
 export default function Areas(props) {
 
     
@@ -15,7 +17,7 @@ export default function Areas(props) {
     const area = props.area
 
     const [produtos, setProdutos] = useState([]);
-    const [sku, setsku] = useState('');
+    const [sku, setsku] = useState(0);
     const [nomeProduto, setNomeProduto] = useState('');
     const [qntProduto, setQntProduto] = useState(0);
 
@@ -23,18 +25,26 @@ export default function Areas(props) {
             if(area){
                 setProdutos(area.produtos) 
             }
+            
+            
+
+            
     }, [area]);
 
     function criarProduto(){
+        
+        const qntConvertida = parseInt(qntProduto)
+        console.log(typeof(qntConvertida))
         const produtos = {
             sku: sku,
             nomeProduto: nomeProduto,
-            qntProduto: qntProduto,
+            qntProduto: qntConvertida,
         }
         editAreaAction(idDep, idSection, idRange, idArea, produtos )
-        setsku('')
+        setsku(0)
         setNomeProduto('')
-        setQntProduto('')  
+        setQntProduto(0) 
+
     }
 
     function selectProdutos(sku){
@@ -44,6 +54,7 @@ export default function Areas(props) {
         setsku(areaSelecionada.sku)
         setNomeProduto(areaSelecionada.nomeProduto)
         setQntProduto(areaSelecionada.qntProduto)
+        
     }
 
      function AtualizaItem(){
@@ -59,9 +70,9 @@ export default function Areas(props) {
         
         updateItemAction(idDep, idSection, idRange, idArea, produtos)
         setProdutos(produtos)
-        setsku('')
+        setsku(0)
         setNomeProduto('')
-        setQntProduto('')
+        setQntProduto(0)
         
     }
 
@@ -78,45 +89,50 @@ export default function Areas(props) {
     }
    
     return(
-        <div className="AreaMain">
-            <h2>Area { area && area.nomeArea}</h2>
-            
-                <p>Produtos</p>
+        <div className="flex flex-col  ">
+            <div className={`bg-orange-500 ${styles.boxShadow} `} >
+                <h2>Area { area && area.nomeArea}</h2>
+                <h3>Produtos</h3>
+            </div>
                 
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                            <th>sku</th>
-                            <th>Nome</th>
-                            <th>Quantidade</th>
-                            <th>Op.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                            <td><input onChange={e => {setsku(e.target.value)}} value={sku} type="num" placeholder="Codigo de Barras" /></td>
-                            <td><input onChange={e => {setNomeProduto(e.target.value)}} value={nomeProduto} type="text" placeholder="Nome Produto" /></td>
-                            <td><input onChange={e => {setQntProduto(e.target.value)}} value={qntProduto} type="num" placeholder="Quantidade" /></td>
-                            <td><button onClick={()=>{criarProduto()}}>Adicionar Produto</button>
-                                <button onClick={()=>{AtualizaItem()}}>Atualizar</button>
-                            </td>
-                        </tr>
-                        {produtos && produtos.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.sku}</td>
-                                <td>{item.nomeProduto}</td>
-                                <td>{item.qntProduto}</td>
-                                <td>
-                                    <button onClick={()=>{removeArea(item.sku)}}>Remover</button>
-                                    <button onClick={()=>{selectProdutos(item.sku)}}>Editar</button>
-                                    </td>
-                            </tr>
-                        ))}
-                        
-                        
-                    </tbody> 
-                </Table>
             
-        </div>
+                    <div className="">
+                        <Table striped bordered hover variant="dark" responsive="sm"  >
+                            <thead>
+                                <tr>
+                                    <th className="">sku</th>
+                                    <th>Nome</th>
+                                    <th>Quantidade</th>
+                                    <th>Op.</th>
+                                </tr>
+                            </thead>
+                            <tbody className=" " >
+                            <tr>
+                                    <td className=""> <input  onChange={e => {setsku(e.target.value)}} type="number" value={sku} placeholder="Codigo de Barras" /></td>
+                                    <td><input onChange={e => {setNomeProduto(e.target.value)}} value={nomeProduto} type="text" placeholder="Nome Produto" /></td>
+                                    <td><input onChange={e => {setQntProduto(e.target.value)}} value={qntProduto} type="Number" placeholder="Quantidade" /></td>
+                                    <td className=""><button onClick={()=>{criarProduto()}}><span className="flex"><FaAngleDoubleLeft className="my-auto mr-1 text-orange-500"/> Adicionar Produto</span></button>
+                                        <button onClick={()=>{AtualizaItem()}}><span className="flex ml-4"><FaAlignCenter className="my-auto mr-1 text-orange-500 "/> Atualizar</span></button>
+                                    </td>
+                                </tr>
+                                {produtos && produtos.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.sku}</td>
+                                        <td>{item.nomeProduto}</td>
+                                        <td>{item.qntProduto}</td>
+                                            <td className="flex gap-4 ">
+                                                <button onClick={()=>{removeArea(item.sku)}}><span className="flex"><FaTrashAlt className="my-auto mr-1 text-orange-500"/> Remover</span></button>
+                                                <button onClick={()=>{selectProdutos(item.sku)}}><span className="flex"><FaPencilAlt className="my-auto mr-1 text-orange-500"/> Editar</span></button>
+                                            </td>
+                                    </tr>
+                                ))}
+                        
+                        
+                            </tbody>
+                        </Table>
+                    </div>
+            </div>
+            
+        
     ) 
 }
