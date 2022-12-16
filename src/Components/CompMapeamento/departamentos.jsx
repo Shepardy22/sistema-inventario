@@ -55,7 +55,7 @@ export default function Departamentos(props) {
             ultInventario                                   : '18/07/2022',
             status                                          : 'Validado',
         });
-        setName('');
+        setName('');    
     }
     function exiberDescricao(id) {
         setIdDepSelecionado(id);
