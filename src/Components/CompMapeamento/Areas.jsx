@@ -10,20 +10,22 @@ import styles from "./Areas.module.css";
 export default function Areas(props) {
 
     
-    const idDep = props.dep
-    const idSection = props.section.id
-    const idRange = props.range.id
-    const idArea = props.area.id
-    const area = props.area
+    const idDep                                                 = props.dep
+    const idSection                                             = props.section.id
+    const idRange                                               = props.range.id
+    const idArea                                                = props.area.id
+    const area                                                  = props.area
 
-    const [produtos, setProdutos] = useState([]);
-    const [sku, setsku] = useState(0);
-    const [nomeProduto, setNomeProduto] = useState('');
-    const [qntProduto, setQntProduto] = useState(0);
+    const [produtos, setProdutos]                               = useState([]);
+    const [sku, setsku]                                         = useState(0);
+    const [nomeProduto, setNomeProduto]                         = useState('');
+    const [qntProduto, setQntProduto]                           = useState(0);
+    const [qntItens, setQntItens]                               = useState(0);
 
     useEffect(() => {
             if(area){
-                setProdutos(area.produtos) 
+                setProdutos(area.produtos)
+                setQntItens(area.qntItens) 
             }
             
             
@@ -33,12 +35,12 @@ export default function Areas(props) {
 
     function criarProduto(){
         
-        const qntConvertida = parseInt(qntProduto)
-        console.log(typeof(qntConvertida))
+        const qntConvertida                                     = parseInt(qntProduto)
+        
         const produtos = {
-            sku: sku,
-            nomeProduto: nomeProduto,
-            qntProduto: qntConvertida,
+            sku                                                 : sku,
+            nomeProduto                                         : nomeProduto,
+            qntProduto                                          : qntConvertida,
         }
         editAreaAction(idDep, idSection, idRange, idArea, produtos )
         setsku(0)
@@ -49,7 +51,7 @@ export default function Areas(props) {
 
     function selectProdutos(sku){
 
-        const areaSelecionada = produtos.find((item) => item.sku === sku)
+        const areaSelecionada                                   = produtos.find((item) => item.sku === sku)
         
         setsku(areaSelecionada.sku)
         setNomeProduto(areaSelecionada.nomeProduto)
@@ -59,14 +61,14 @@ export default function Areas(props) {
 
      function AtualizaItem(){
         
-        const produtos = area.produtos;
-        console.log(produtos)
-        const areaSelecionada = area.produtos.find((item) => item.sku === sku);
+        const produtos                                          = area.produtos;
+        
+        const areaSelecionada                                   = area.produtos.find((item) => item.sku === sku);
         
 
-        areaSelecionada.sku = sku;
-        areaSelecionada.nomeProduto = nomeProduto;
-        areaSelecionada.qntProduto = qntProduto;
+        areaSelecionada.sku                                     = sku;
+        areaSelecionada.nomeProduto                             = nomeProduto;
+        areaSelecionada.qntProduto                              = qntProduto;
         
         updateItemAction(idDep, idSection, idRange, idArea, produtos)
         setProdutos(produtos)
@@ -78,7 +80,7 @@ export default function Areas(props) {
 
     function removeArea(sku){
         
-        const areaSelecionada = produtos.findIndex((item) => item.sku === sku)
+        const areaSelecionada                                   = produtos.findIndex((item) => item.sku === sku)
         produtos.splice(areaSelecionada, 1)
         setProdutos(produtos)
         setsku('')
@@ -89,40 +91,43 @@ export default function Areas(props) {
     }
    
     return(
-        <div className="flex flex-col  ">
-            <div className={`bg-orange-500 ${styles.boxShadow} `} >
+        <div className                                          = "flex flex-col  ">
+            <div className                                      = {`bg-orange-500 ${styles.boxShadow} `} >
                 <h2>Area { area && area.nomeArea}</h2>
                 <h3>Produtos</h3>
             </div>
                 
             
-                    <div className="">
-                        <Table striped bordered hover variant="dark" responsive="sm"  >
+                    <div className                              = "">
+                        <Table striped bordered hover variant   = "dark" responsive="sm"  >
                             <thead>
                                 <tr>
-                                    <th className="">sku</th>
+                                    <th className               = "">sku</th>
                                     <th>Nome</th>
                                     <th>Quantidade</th>
                                     <th>Op.</th>
                                 </tr>
                             </thead>
-                            <tbody className=" " >
+                            <tbody className                    = " " >
                             <tr>
-                                    <td className=""> <input  onChange={e => {setsku(e.target.value)}} type="number" value={sku} placeholder="Codigo de Barras" /></td>
-                                    <td><input onChange={e => {setNomeProduto(e.target.value)}} value={nomeProduto} type="text" placeholder="Nome Produto" /></td>
-                                    <td><input onChange={e => {setQntProduto(e.target.value)}} value={qntProduto} type="Number" placeholder="Quantidade" /></td>
-                                    <td className=""><button onClick={()=>{criarProduto()}}><span className="flex"><FaAngleDoubleLeft className="my-auto mr-1 text-orange-500"/> Adicionar Produto</span></button>
-                                        <button onClick={()=>{AtualizaItem()}}><span className="flex ml-4"><FaAlignCenter className="my-auto mr-1 text-orange-500 "/> Atualizar</span></button>
+                                    <td className               = ""> <input  onChange={e => {setsku(e.target.value)}} type="number" value={sku} placeholder="Codigo de Barras" 
+                                    className=" text-gray-800 font-bold pl-2"/></td>
+                                    <td><input onChange         = {e => {setNomeProduto(e.target.value)}} value={nomeProduto} type="text" placeholder="Nome Produto" 
+                                    className=" text-gray-800 font-bold pl-2"/></td>
+                                    <td><input onChange         = {e => {setQntProduto(e.target.value)}} value={qntProduto} type="Number" placeholder="Quantidade" 
+                                    className=" text-gray-800 font-bold pl-2"/></td>
+                                    <td className               = ""><button onClick={()=>{criarProduto()}}><span className="flex"><FaAngleDoubleLeft className="my-auto mr-1 text-orange-500"/> Adicionar Produto</span></button>
+                                        <button onClick         = {()=>{AtualizaItem()}}><span className="flex ml-4"><FaAlignCenter className="my-auto mr-1 text-orange-500 "/> Atualizar</span></button>
                                     </td>
                                 </tr>
                                 {produtos && produtos.map((item, index) => (
-                                    <tr key={index}>
+                                    <tr key                     = {index}>
                                         <td>{item.sku}</td>
                                         <td>{item.nomeProduto}</td>
                                         <td>{item.qntProduto}</td>
-                                            <td className="flex gap-4 ">
-                                                <button onClick={()=>{removeArea(item.sku)}}><span className="flex"><FaTrashAlt className="my-auto mr-1 text-orange-500"/> Remover</span></button>
-                                                <button onClick={()=>{selectProdutos(item.sku)}}><span className="flex"><FaPencilAlt className="my-auto mr-1 text-orange-500"/> Editar</span></button>
+                                            <td className       = "flex gap-4 ">
+                                                <button onClick = {()=>{removeArea(item.sku)}}><span className="flex"><FaTrashAlt className="my-auto mr-1 text-orange-500"/> Remover</span></button>
+                                                <button onClick = {()=>{selectProdutos(item.sku)}}><span className="flex"><FaPencilAlt className="my-auto mr-1 text-orange-500"/> Editar</span></button>
                                             </td>
                                     </tr>
                                 ))}

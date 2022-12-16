@@ -10,3 +10,14 @@ export async function removeAreaAcess(idDep, idSection, idRange, idArea) {
     const response = await deleteDoc(doc(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges", `${idRange}`, "Areas", `${idArea}`));
     return response;
 }
+
+export async function updateQntAcess(idDep, idSection, idRange, idArea, itens) {
+    const responseRef = await doc(db, "Departamentos", `${idDep}`,
+     "Sessoes", `${idSection}`,
+      "Ranges", `${idRange}`,
+       "Areas", `${idArea}`);
+     await updateDoc(responseRef, {
+        qntItens: itens,
+    });
+
+}
