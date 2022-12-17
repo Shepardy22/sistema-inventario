@@ -1,5 +1,6 @@
 import { db } from "../../firebaseConfig";
-import { addDoc, collection, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 
 
@@ -7,10 +8,15 @@ import { addDoc, collection, doc, getDocs, setDoc, updateDoc } from "firebase/fi
 
 export async function addDepAcess(body) {
     const response = await addDoc(collection(db, "Departamentos"), body);
-    
     return response;
-   
 }
+
+export async function removeDepAcess(id) {
+    const response = await deleteDoc(doc(db, "Departamentos", `${id}`));
+    return response;
+}
+
+
 
 export async function setDepAcess(body , id) {
     const cityRef = doc(db, 'Departamentos' , `${id}`);
@@ -34,7 +40,6 @@ export async function getDepAcess() {
     return response; 
 }
 
-export async function addSectionAcess(body, id) {
-    const response = await addDoc(collection(db, "Departamentos", `${id}`, "Sessoes"), body);
-    return response;
-}
+
+
+

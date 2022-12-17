@@ -1,4 +1,5 @@
-import { addDepAcess, addSectionAcess, getDepAcess, setDepAcess, updateDepAcess } from "../dataAcess/depAcess";
+import { addDepAcess, getDepAcess, setDepAcess, updateDepAcess } from "../dataAcess/depAcess";
+
 
 export async function addDepAction(body){
     const response = await addDepAcess(body);
@@ -20,7 +21,3 @@ export async function getDepAction(){
     return response;
 }
 
-export async function addSectionAction(body, id){
-    const response = await addSectionAcess(body, id);
-    return response;
-}

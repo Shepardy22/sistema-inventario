@@ -6,7 +6,10 @@ import { addDepAction, addSectionAction, getDepAction, setDepAction, updateDepAc
 import { Row } from 'react-bootstrap';
 import TabelaDescDep from "../Tabelas/TabelaDescDep";
 import departamentos from "./departamento.scss";
+import { DepartamentoService } from "./DepartamentoService";
+import { SectionService } from "./SectionService";
 
+import DeptoObserver from "./DepartamentoService";
 
 
 export default function Departamentos(props) {
@@ -23,6 +26,9 @@ export default function Departamentos(props) {
  
     const [departamentos, setDepartamentos]                 = useState([]);
 
+    const depService                                   = new DepartamentoService();
+    const sectionService                                   = new SectionService();
+
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, 'Departamentos'), (snapshot) => {
             setDepartamentos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
@@ -31,10 +37,7 @@ export default function Departamentos(props) {
         return unsubscribe;
     }, []);
 
-    async function deleteDep(id) {
-        const response                                      = await deleteDoc(doc(db, "Departamentos", id));
-        return response;
-    }
+   
     function setDep() {
         setDepAction({
             name                                            : name,
@@ -45,18 +48,22 @@ export default function Departamentos(props) {
             ]
         }, 'dep003');
     }
-    function addDep() {
-        addDepAction({
-            name                                            : name,
-            qntSessoes                                      : 6,
-            qntProdutos                                     : 524,
-            brutoTotal                                      : 24348,
-            responsavel                                     : 'Dione',
-            ultInventario                                   : '18/07/2022',
-            status                                          : 'Validado',
-        });
+
+
+    function addDepartamento() {
+        depService.adicionarDepartamento(name)
         setName('');    
     }
+    function addSessao(){
+        const id                                            = IdDepSelecionado;
+        sectionService.adicionarSessao(id, nameSection);
+        setNameSection('');
+    }
+    function deleteDepartamento(id) {
+        depService.removerDepartamento(id);
+    }
+
+
     function exiberDescricao(id) {
         setIdDepSelecionado(id);
         function selecionarSessao(id) {
@@ -80,18 +87,16 @@ export default function Departamentos(props) {
         sectionObj(session);
         handleSubMenu("Sessoes")
     }
-    function addSection(){
-        const id                                            = IdDepSelecionado;
-        addSectionAction({
-            sectionName                                     : nameSection,
-            qntProdutos                                     : 524,
-            brutoTotal                                      : 24348,
-            responsavel                                     : 'Dione',
-            ultInventario                                   : '18/07/2022',
-            status                                          : 'Validado',
-           }
-        , id);
-        setNameSection('');
+
+    
+
+    
+
+    function getDep(){
+
+        const dep = new DepartamentoService();
+        dep.getDepartamento();
+        
     }
 
     return (
@@ -141,7 +146,7 @@ export default function Departamentos(props) {
                             value                           = {name}
                             onChange                        = {(e) => setName(e.target.value)}
                         />
-                        <button className                   = "botaoAdd" onClick={addDep}>Adicionar</button>
+                        <button className                   = "botaoAdd" onClick={addDepartamento}>Adicionar</button>
                         <button className                   = "botaoAdd" onClick={setDep}>Setar</button>
                     </div>
                 </div>
@@ -176,7 +181,8 @@ export default function Departamentos(props) {
                                 value                       = {nameSection}
                                 onChange                    = {(e) => setNameSection(e.target.value)}
                             />
-                        <button onClick                     = {()=>{addSection()}} className="Sessoes addSection">Adicionar Sessão</button>
+                        <button onClick                     = {()=>{addSessao()}} className="Sessoes addSection">Adicionar Sessão</button>
+                        <button onClick={()=>{getDep()}} className="Sessoes addSection">Alert</button>
                     </div>
                 </div>
 
@@ -189,7 +195,7 @@ export default function Departamentos(props) {
                 <div className                              = " ">
                     <div className                          = "flex justify-between ml-2">
                         <h4>{descricao.name}</h4>
-                        {descricao && (<button className    = "botaoAdd" onClick={() => { deleteDep(descricao.id) }}>Excluir Departamento</button>)}
+                        {descricao && (<button className    = "botaoAdd" onClick={() => { deleteDepartamento(descricao.id) }}>Excluir Departamento</button>)}
                     </div>
                     <div className                          = "">
                         
