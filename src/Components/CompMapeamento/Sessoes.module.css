@@ -1,0 +1,51 @@
+.sectionTitle {
+  box-shadow: 2px 2px 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+.sessaoRenderFlex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.renderButton {
+  border: none;
+  background-color: #ccc;
+  margin: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.5s;
+  box-shadow: 0 0 0 1px rgb(0, 0, 0);
+  list-style: none;
+}
+.renderButton:hover {
+  background-color: #212529;
+  color: #fff;
+}
+
+.renderButton :hover {
+  background-color: #212529;
+  color: black;
+}
+
+.selected {
+  background-color: #212529;
+  color: #fff;
+}
+
+.areaGerada {
+  display: none;
+}
+
+.sectionRenderDescription {
+  background-color: #212529;
+  box-shadow: 2px 2px 8px;
+}
+
+.boxShadow {
+  box-shadow: 1px 1px 4px;
+}/*# sourceMappingURL=Sessoes.module.css.map */

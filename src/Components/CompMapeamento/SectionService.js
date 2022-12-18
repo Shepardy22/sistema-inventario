@@ -4,6 +4,15 @@ import { db } from "../../firebaseConfig";
 import { addSectionAcess, getSectionAcess } from "../../services/dataAcess/sectionAcess";
 
 export class SectionService {
+
+    nomeSection = '';
+    qntProdutos = 0;
+    brutoTotal = 0;
+    responsavel = '';
+    ultInventario = '';
+    status = '';
+
+
     constructor() {
         
     }
@@ -26,7 +35,8 @@ export class SectionService {
        return getSectionAcess(id);
     }
 
-    setSections(sections) {
-        this.sections = sections;
+    getRanges(){
+
+        
     }
 }

@@ -21,3 +21,30 @@ export async function updateQntAcess(idDep, idSection, idRange, idArea, itens) {
     });
 
 }
+
+
+export async function rangeAcess(idDep, idSection) {
+    
+
+    const response = await getDocs(collection(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges"));
+
+    const data = response.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+       
+    }));
+    //console.log(data)
+    return data;
+
+}
+
+export async function removeRangeAcess(idDep, idSection , idRange) {
+    const response = await deleteDoc(doc(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges", `${idRange}`));
+    return response;
+}
+
+export async function addRangeAcess(body, idDep, idSection) {
+    console.log(body)
+    const response = await addDoc(collection(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges"), body);
+    return response;
+}

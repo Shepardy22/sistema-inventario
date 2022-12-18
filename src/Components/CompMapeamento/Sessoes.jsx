@@ -8,6 +8,8 @@ import TabelaDescSection from "../Tabelas/TabelaDescSection";
 import { addRangeAction, removeRangeAction } from "../../services/actions/sectionActions";
 import { addRangeAcess } from "../../services/dataAcess/sectionAcess";
 import { addAreasAction } from "../../services/actions/rangeAction";
+import {RangeService} from "./RangeService";
+
 import styles from "./Sessoes.module.scss";
 
 
@@ -23,44 +25,41 @@ export default function Sessoes(props) {
     const rangeHandle                                                   = props.range;
 
     const colectionRef                                                  = collection(db, 'Departamentos', `${departamentoID}`, 'Sessoes', );
-
     const [rangeSelected, setRangeSelected]                             = useState(null);
-
     const [nameRange, setNameRange]                                     = useState('');
-    
+
     const [rangeFinal, setRangeFinal]                                   = useState(0);
-    
-    const [sessoes, setSessoes]                                         = useState([]);
+
+    const [ranges, setRanges]                                         = useState([]);
+
+    const [rangeInitial, setRangeInitial]                               = useState(0);
+    const [geradorAreas, setGeradorAreas]                               = useState(false);
+    const handleSubMenu                                                  = props.handleSubMenu;
+
+     const rangeService = new RangeService();
 
     useEffect (() => {
-        const unsubscribe                                               = onSnapshot(collection(db,
-            'Departamentos', `${departamentoID}`,
-            'Sessoes', `${sessionID}`,
-            'Ranges'),
-           (snapshot) => {
-            setSessoes(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-        })
-        
-        return unsubscribe;
+        handleListRanges(); 
     }, []);
+
+   async function handleListRanges(){
+        const ranges = await rangeService.getRanges(departamentoID, sessionID);
+        setRanges(ranges);
+        //console.log(ranges);
+    }
 
     function removerRange(id) {
         const idDep                                                     = departamentoID;
         const idSection                                                 = sessionID;
         const idRange                                                   = id;
-        removeRangeAction(idDep, idSection, idRange);
+        rangeService.removerRange(idDep, idSection, idRange);
+        handleListRanges();
     }
-    function removerSession(id) {
-        const idDep                                                     = departamentoID;
-        const idSection                                                 = id;
-        //removeSessionAction(idDep, idSection);
-    }
-
-    const [rangeInitial, setRangeInitial]                               = useState(0);
-    const [geradorAreas, setGeradorAreas]                               = useState(false);
-   function gerarAreas(item){
-        setRangeSelected(item);
     
+   function gerarAreas(item){
+
+        setRangeSelected(item);
+        
 
         let idDep                                                       = departamentoID;
         let idSection                                                   = sessionID;
@@ -90,7 +89,7 @@ export default function Sessoes(props) {
                                 qntProduto                              : 48,
                             }
                         ],
-                        obs: ''
+                        obs                                             : ''
                 }
                 addAreasAction(body, idDep, idSection, idRange);
             }  
@@ -98,23 +97,18 @@ export default function Sessoes(props) {
         }
     }
 
-   function addRange(){ 
-        const body = {
-            nameRange                                                   : ` ${nameRange} ${rangeInitial}-${rangeFinal}`,
-            status                                                      : 'Mapeado',
-            qntProdutos                                                 : 12,
-            brutoTotal                                                  : 123123,
-        }
+   function adicionarRange(){ 
+        
         const idDep                                                     = departamentoID;
         const idSection                                                 = sessionID;
-        addRangeAcess(body, idDep, idSection); 
+        rangeService.addRange(idDep, idSection, nameRange, rangeInitial, rangeFinal);
         setGeradorAreas(true); 
+        handleListRanges();
     }
 
-   const handleSubMenu                                                  = props.handleSubMenu;
    function navigation(props){
-        rangeHandle(props)
-        handleSubMenu("Ranges")
+        rangeHandle(props);
+        handleSubMenu("Ranges");
     }
 
    
@@ -130,15 +124,15 @@ export default function Sessoes(props) {
                 
                     <div className                                      = {`flex flex-col sm:flex-row justify-center `}>
                         {/*Lista Ranges*/}
-                        <div className                                  = {`bg-primaryBg-100 hover:bg-secondaryBg-100 w-full border  ${styles.sectionTitle} `}  >
-                                {sessoes && sessoes.map((item) => {
+                        <div className                                  = {`bg-primaryBg-100 w-full border  ${styles.sectionTitle} `}  >
+                                {ranges && ranges.map((item) => {
                                         return (
                                             <ul  key                    = {item.id}
-                                            className                   = {`flex   `}>
+                                            className                   = {`flex mt-2 `}>
                                                 <li className           = {``} >
-                                                    <button className   = {`${styles.renderButton} `}
+                                                    <button className   = {`border rounded-md  p-1 text-gray-300 hover:text-orange-500 ${item.rangeName === nameRange && 'text-orange-500'}  ${styles.boxShadow} `}
                                                         onClick         = {()=>{gerarAreas(item)}}>
-                                                            {item.nameRange}
+                                                            {item.rangeName}
                                                     </button>
                                                 </li>
                                             </ul>
@@ -149,7 +143,7 @@ export default function Sessoes(props) {
                                 <input className                        = " w-1/5 h-8" type="text" placeholder="ex: Range 01" value={nameRange} onChange={e => (setNameRange(e.target.value))}/>
                                 <input className                        = "w-1/5 h-8" type="number" value={rangeInitial} onChange={(e)=>{setRangeInitial(e.target.value)}} />
                                 <input className                        = "w-1/5 h-8" type="number" value={rangeFinal} onChange={(e)=>{setRangeFinal(e.target.value)}} />
-                                <button className                       = {`w-1/5 h-8 ${styles.renderButton} text-sm`} onClick={()=>{addRange()}}>Add</button>
+                                <button className                       = {`w-1/5 h-8 ${styles.renderButton} text-sm`} onClick={()=>{adicionarRange()}}>Add</button>
                             </div>
                 
                         </div>
@@ -183,7 +177,7 @@ export default function Sessoes(props) {
                     <div className                                      = "flex justify-between">
                         <h4>{rangeSelected && rangeSelected.nameRange}</h4>
                         
-                        {sessoes && (<button className                  = "botaoAdd" onClick={() => {removerRange(rangeSelected.id) }}>Excluir Range</button>)}
+                        {ranges && (<button className                  = "botaoAdd" onClick={() => {removerRange(rangeSelected.id) }}>Excluir Range</button>)}
                     </div>
                     <div className                                      = {`mt-2 ${styles.boxShadow}`}>
                         <TabelaDescSection desc                         = {rangeSelected} />
