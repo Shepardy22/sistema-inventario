@@ -10,6 +10,7 @@ import { DepartamentoService } from "./DepartamentoService";
 import { SectionService } from "./SectionService";
 
 import DeptoObserver from "./DepartamentoService";
+import { async } from "@firebase/util";
 
 
 export default function Departamentos(props) {
@@ -18,85 +19,68 @@ export default function Departamentos(props) {
     const sectionObj                                        = props.sectionObj;
     const handleSubMenu                                     = props.handleSubMenu;
 
+    const [IdDepSelecionado, setIdDepSelecionado]           = useState(null);
+
     const [name, setName]                                   = useState('');
     const [nameSection, setNameSection]                     = useState('');
     const [descricao, setDescricao]                         = useState('');
-    const [IdDepSelecionado, setIdDepSelecionado]           = useState(null);
     const [sectionList, setSectionList]                     = useState([]);
- 
     const [departamentos, setDepartamentos]                 = useState([]);
 
-    const depService                                   = new DepartamentoService();
-    const sectionService                                   = new SectionService();
+    const depService                                        = new DepartamentoService();
+    const sectionService                                    = new SectionService();
+
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, 'Departamentos'), (snapshot) => {
-            setDepartamentos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            //console.log(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-        })
-        return unsubscribe;
-    }, []);
+        handleListDepartamentos();
+     }, []);
 
-   
-    function setDep() {
-        setDepAction({
-            name                                            : name,
-            areas: [
-                { area                                      : '0001' },
-                { area                                      : '0022' },
-                { area                                      : '0111' }
-            ]
-        }, 'dep003');
+   async function handleListDepartamentos() {
+        const dep                                           = await depService.getDepartamentos();
+        setDepartamentos(dep);
+        //console.log('Departamentos: ', dep);
+    }
+
+    async function handleListSessoes(id) {
+        const sessoes                                       = await sectionService.getSessoes(id);
+        setSectionList(sessoes);
+        //console.log('Sessoes: ', section);
     }
 
 
     function addDepartamento() {
         depService.adicionarDepartamento(name)
+        handleListDepartamentos();
         setName('');    
     }
-    function addSessao(){
-        const id                                            = IdDepSelecionado;
-        sectionService.adicionarSessao(id, nameSection);
-        setNameSection('');
-    }
+
     function deleteDepartamento(id) {
         depService.removerDepartamento(id);
     }
 
-
-    function exiberDescricao(id) {
-        setIdDepSelecionado(id);
-        function selecionarSessao(id) {
-            const sessionRef                                = collection(db, 'Departamentos', `${id}`, 'Sessoes');
-            const getData = async () => {
-                const data                                  = await getDocs(sessionRef);
-                setSectionList(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            }
-            getData();
-        }
-
-        const dep                                           = departamentos.find(dep => dep.id === id);
-        setDescricao(dep);
-        selecionarSessao(id) 
-        handle(id);
-        
-        
+    function addSessao(){
+        const id                                            = IdDepSelecionado;
+        sectionService.adicionarSessao(id, nameSection);
+        setNameSection('');
+        handleListSessoes(id);
     }
+
+    function deleteSessao(id){
+        sectionService.removerSessao(id);
+    }
+
+    function exibirDescricao(id) {
+        const dep                                           = departamentos.find(dep => dep.id === id);
+        setIdDepSelecionado(id);
+        handleListSessoes(id);
+        handle(id);
+        setDescricao(dep);  
+    }
+
     function selecaoSessao(id) {
         const session                                       = sectionList.find(session => session.id === id);
         sectionObj(session);
         handleSubMenu("Sessoes")
-    }
-
-    
-
-    
-
-    function getDep(){
-
-        const dep = new DepartamentoService();
-        dep.getDepartamento();
-        
     }
 
     return (
@@ -118,17 +102,17 @@ export default function Departamentos(props) {
                                 <div key                    = {departamento.id}
                                     className               = {`bg-secondaryBg-100  flex justify-between px-2 ${IdDepSelecionado === departamento.id && '  border '}`} >
                                     <div className          = " ">
-                                        <button className   = {` h-12 m-1 px-2 rounded-md  border renderDesc text-gray-300  ${IdDepSelecionado === departamento.id && 'selected '}`} onClick={() => { exiberDescricao(departamento.id) }}>
+                                        <button className   = {` h-12 m-1 px-2 rounded-md  border renderDesc text-gray-300 hover:text-orange-500  ${IdDepSelecionado === departamento.id && 'selected '}`} onClick={() => { exibirDescricao(departamento.id) }}>
                                             {departamento.name}
                                         </button>
                                     </div>
                                     <div className          = "">
-                                        <div className      = {` h-12  text-gray-400 flex items-center pl-8`} onClick={() => { exiberDescricao(departamento.id) }}>
+                                        <div className      = {` h-12  text-gray-400 flex items-center pl-8`} onClick={() => { exibirDescricao(departamento.id) }}>
                                             {departamento.qntSessoes}
                                         </div>
                                     </div>
                                     <div className          = "">
-                                        <div className      = {` h-12  text-gray-400 flex items-center  `} onClick={() => { exiberDescricao(departamento.id) }}>
+                                        <div className      = {` h-12  text-gray-400 flex items-center  `} onClick={() => { exibirDescricao(departamento.id) }}>
                                             {departamento.status}
                                         </div> 
                                     </div>
@@ -147,7 +131,7 @@ export default function Departamentos(props) {
                             onChange                        = {(e) => setName(e.target.value)}
                         />
                         <button className                   = "botaoAdd" onClick={addDepartamento}>Adicionar</button>
-                        <button className                   = "botaoAdd" onClick={setDep}>Setar</button>
+                        {/* <button className                   = "botaoAdd" onClick={()=>{}}>Setar</button> */}
                     </div>
                 </div>
 
@@ -159,7 +143,7 @@ export default function Departamentos(props) {
                         <div className                      = " w-1/3 overflow-y-auto">
                             {   sectionList.length > 0  ? sectionList.map((section) => (
                                 <div key                    = {section.id}>
-                                    <button onClick         = {() => {selecaoSessao(section.id)}} className="Sessoes">{section.sectionName}</button>
+                                    <button onClick         = {() => {selecaoSessao(section.id)}} className={`text-gray-300 border rounded-sm p-2 hover:text-orange-500 m-1 renderDesc`}>{section.sectionName}</button>
                                 </div>
                             ))                              : (
                             <p className                    = "text-gray-400 p-2">Selecione um Departamento</p>)}
@@ -182,13 +166,13 @@ export default function Departamentos(props) {
                                 onChange                    = {(e) => setNameSection(e.target.value)}
                             />
                         <button onClick                     = {()=>{addSessao()}} className="Sessoes addSection">Adicionar Sessão</button>
-                        <button onClick={()=>{getDep()}} className="Sessoes addSection">Alert</button>
+                        
                     </div>
                 </div>
 
             </div>
 
-            {/* Detalhes do Departamento */}
+            {/* Descrição do Departamento */}
             <div className                                  = "border rounded-sm m-1  bg-orange-500 renderDesc">
                 <h4 className                               = "ml-2 ">Descrição Departamentos</h4>
 

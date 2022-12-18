@@ -28,17 +28,35 @@ export async function updateDepAcess(body , id) {
    updateDoc(cityRef, body);
 }
 
-export async function getDepAcess() {
+export async function GetDepAcess() {
     const response = await getDocs(collection(db, "Departamentos"));
-    
-    response.forEach((doc) => {
-        console.log(
-            doc.id,
-            doc.data()
-            );
-    });
-    return response; 
+
+    const data = response.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+
+    return data;
 }
+
+export function GetDepAcessRealTime() {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        onSnapshot(collection(db, "Departamentos"), (snapshot) => {
+            const data = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setData(data);
+        });
+    }, []);
+
+    return data;
+}
+
+
 
 
 

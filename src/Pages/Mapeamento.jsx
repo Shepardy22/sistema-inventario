@@ -31,7 +31,6 @@ export default function Mapeamento() {
     }
     function selecaoRange(obj){
         setRange(obj)
-        
     }
     function selecaoArea(obj){
         setArea(obj)

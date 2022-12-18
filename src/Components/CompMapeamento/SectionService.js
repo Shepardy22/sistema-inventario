@@ -1,7 +1,7 @@
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "../../firebaseConfig";
-import { addSectionAcess } from "../../services/dataAcess/sectionAcess";
+import { addSectionAcess, getSectionAcess } from "../../services/dataAcess/sectionAcess";
 
 export class SectionService {
     constructor() {
@@ -22,13 +22,8 @@ export class SectionService {
         alert('Sessão adicionada')
     }
 
-
-
-
-
-
-    getSections() {
-        return this.sections;
+    getSessoes(id) {
+       return getSectionAcess(id);
     }
 
     setSections(sections) {

@@ -1,13 +1,15 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react"
-import {GetData} from "../../services/dataAcess/depAcess";
+import {GetData, GetDepAcess} from "../../services/dataAcess/depAcess";
 import { addDepAcess } from "../../services/dataAcess/depAcess";
 import {removeDepAcess} from '../../services/dataAcess/depAcess'
 
 export class DepartamentoService {
 
 
-
+    getDepartamentos() {
+       return GetDepAcess();
+    }
     
 
     adicionarDepartamento(name) {

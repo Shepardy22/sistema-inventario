@@ -1,4 +1,4 @@
-import { addDepAcess, getDepAcess, setDepAcess, updateDepAcess } from "../dataAcess/depAcess";
+import { addDepAcess, setDepAcess, updateDepAcess } from "../dataAcess/depAcess";
 
 
 export async function addDepAction(body){
@@ -16,8 +16,4 @@ export async function updateDepAction(body, id){
     return response;
 }
 
-export async function getDepAction(){
-    const response = await getDepAcess();
-    return response;
-}
 
