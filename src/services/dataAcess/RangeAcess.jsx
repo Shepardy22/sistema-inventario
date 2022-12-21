@@ -44,7 +44,6 @@ export async function removeRangeAcess(idDep, idSection , idRange) {
 }
 
 export async function addRangeAcess(body, idDep, idSection) {
-    console.log(body)
     const response = await addDoc(collection(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges"), body);
     return response;
 }

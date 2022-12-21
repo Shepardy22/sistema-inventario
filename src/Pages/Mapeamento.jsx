@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import Areas from "../Components/CompMapeamento/Areas";
 import Departamentos from "../Components/CompMapeamento/departamentos";
@@ -6,9 +7,13 @@ import Sessoes from "../Components/CompMapeamento/Sessoes";
 import NavBar from "../Components/NavBar";
 import SubNav from "../Components/SubNav";
 
+
+
+
+
 export default function Mapeamento() {
 
-    
+
     
     const [departamento, setdepartamento]   = useState(null);
     const [session, setSession]             = useState(null);

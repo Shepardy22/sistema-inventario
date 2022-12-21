@@ -1,52 +1,52 @@
-import { collection, deleteDoc, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react"
-import { db } from "../../firebaseConfig";
-import { addDepAction, addSectionAction, getDepAction, setDepAction, updateDepAction } from "../../services/actions/depActions";
 
-import { Row } from 'react-bootstrap';
 import TabelaDescDep from "../Tabelas/TabelaDescDep";
 import departamentos from "./departamento.scss";
 import { DepartamentoService } from "./DepartamentoService";
 import { SectionService } from "./SectionService";
 
-import DeptoObserver from "./DepartamentoService";
-import { async } from "@firebase/util";
+
+
+import MapeamentoControle from '../../services/MapeamentoControle';
+
+
+
+
 
 
 export default function Departamentos(props) {
 
+   
+
+    const mapControl = MapeamentoControle();
+    
     const handle                                            = props.handleDep;
     const sectionObj                                        = props.sectionObj;
     const handleSubMenu                                     = props.handleSubMenu;
-
     const [IdDepSelecionado, setIdDepSelecionado]           = useState(null);
-
     const [name, setName]                                   = useState('');
     const [nameSection, setNameSection]                     = useState('');
     const [descricao, setDescricao]                         = useState('');
     const [sectionList, setSectionList]                     = useState([]);
-    const [departamentos, setDepartamentos]                 = useState([]);
+    const [departaments, setDepartaments]                 = useState([]);
+
 
     const depService                                        = new DepartamentoService();
     const sectionService                                    = new SectionService();
 
+    
 
+    async function handleListDepartamentos() {
+        const response                                      = await depService.getDepartaments();
+        setDepartaments(response);
+    }
+    
+    
     useEffect(() => {
-        handleListDepartamentos();
+        handleListDepartamentos() 
      }, []);
 
-   async function handleListDepartamentos() {
-        const dep                                           = await depService.getDepartamentos();
-        setDepartamentos(dep);
-        //console.log('Departamentos: ', dep);
-    }
-
-    async function handleListSessoes(id) {
-        const sessoes                                       = await sectionService.getSessoes(id);
-        setSectionList(sessoes);
-        //console.log('Sessoes: ', section);
-    }
-
+    
 
     function addDepartamento() {
         depService.adicionarDepartamento(name)
@@ -54,34 +54,63 @@ export default function Departamentos(props) {
         setName('');    
     }
 
-    function deleteDepartamento(id) {
+    async function exibirDescricao(idDepartament) {
+        
+        const departamentSelected = await depService.getDepartamentId(idDepartament);
+        console.log('Departament Selected: ', departamentSelected.departamentSelected);
+        const SectionList = await mapControl.getSections();
+          console.log('Section List: ', SectionList);
+ 
+         setDescricao(departamentSelected.departamentSelected);
+         setSectionList(SectionList)
+         
+        
+ 
+         
+        handle(idDepartament);
+     }
+
+    function deleteDepartament(id) {
+        console.log('Id: ', id);
         depService.removerDepartamento(id);
+        handleListDepartamentos();
     }
 
-    function addSessao(){
+   async function addSessao(){
         const id                                            = IdDepSelecionado;
         sectionService.adicionarSessao(id, nameSection);
+
         setNameSection('');
-        handleListSessoes(id);
+        
     }
 
     function deleteSessao(id){
         sectionService.removerSessao(id);
     }
 
-    function exibirDescricao(id) {
-        const dep                                           = departamentos.find(dep => dep.id === id);
-        setIdDepSelecionado(id);
-        handleListSessoes(id);
-        handle(id);
-        setDescricao(dep);  
-    }
-
-    function selecaoSessao(id) {
-        const session                                       = sectionList.find(session => session.id === id);
+   async function selecaoSessao(id) {
+        console.log('getSection()...');
+        
+        const session                                       = sectionList.find((section) => section.id === id);
         sectionObj(session);
+        mapControl.setSectionSelected(session);
+       const section = await mapControl.getSectionSelected();
+         
+       
+         
         handleSubMenu("Sessoes")
     }
+
+
+
+   
+
+   
+
+
+
+
+
 
     return (
         <div className                                      = "bg-white ">
@@ -97,7 +126,7 @@ export default function Departamentos(props) {
                                 </div>
 
                         <div className                      = "bg-secondaryBg-100 ">
-                                {departamentos && departamentos.map((departamento) => (      
+                                {departaments && departaments.map((departamento) => (      
                             
                                 <div key                    = {departamento.id}
                                     className               = {`bg-secondaryBg-100  flex justify-between px-2 ${IdDepSelecionado === departamento.id && '  border '}`} >
@@ -112,7 +141,8 @@ export default function Departamentos(props) {
                                         </div>
                                     </div>
                                     <div className          = "">
-                                        <div className      = {` h-12  text-gray-400 flex items-center  `} onClick={() => { exibirDescricao(departamento.id) }}>
+                                        <div className      = {` h-12  text-gray-400 flex items-center  `}
+                                        onClick             = {() => { exibirDescricao(departamento.id) }}>
                                             {departamento.status}
                                         </div> 
                                     </div>
@@ -131,7 +161,7 @@ export default function Departamentos(props) {
                             onChange                        = {(e) => setName(e.target.value)}
                         />
                         <button className                   = "botaoAdd" onClick={addDepartamento}>Adicionar</button>
-                        {/* <button className                   = "botaoAdd" onClick={()=>{}}>Setar</button> */}
+                        
                     </div>
                 </div>
 
@@ -179,7 +209,7 @@ export default function Departamentos(props) {
                 <div className                              = " ">
                     <div className                          = "flex justify-between ml-2">
                         <h4>{descricao.name}</h4>
-                        {descricao && (<button className    = "botaoAdd" onClick={() => { deleteDepartamento(descricao.id) }}>Excluir Departamento</button>)}
+                        {descricao && (<button className    = "botaoAdd" onClick={() => { deleteDepartament(descricao.id) }}>Excluir Departamento</button>)}
                     </div>
                     <div className                          = "">
                         

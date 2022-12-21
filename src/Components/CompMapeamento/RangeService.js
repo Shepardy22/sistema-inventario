@@ -14,7 +14,7 @@ export class RangeService {
     ranges = [];
 
 
-
+    
 
 
     getRanges(idDep, idSessao){

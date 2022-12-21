@@ -3,14 +3,24 @@ import { useEffect, useState } from "react"
 import {GetData, GetDepAcess} from "../../services/dataAcess/depAcess";
 import { addDepAcess } from "../../services/dataAcess/depAcess";
 import {removeDepAcess} from '../../services/dataAcess/depAcess'
+import  MapeamentoService  from "../../services/MapeamentoControle";
 
 export class DepartamentoService {
 
+    depSelecionado = '';
 
-    getDepartamentos() {
-       return GetDepAcess();
+    getDepartaments() {
+        async function getDepartamentosAction() {
+            const departamentos = await GetDepAcess();
+            console.log('departamentos: ', departamentos);
+            return departamentos;
+        }
+        return getDepartamentosAction();
     }
     
+    setIdDepartamentoSelecionado(id) {
+        this.depSelecionado = id;
+    }
 
     adicionarDepartamento(name) {
         const body = {
@@ -30,12 +40,10 @@ export class DepartamentoService {
         alert('Departamento removido')
     }
 
-    exibirDescricao() {
-        
+    departamentoSelecionado(){
+        return this.depSelecionado;
     }
-    selecionarSessao() {
-        alert('Sessão selecionada')
-    }
+
 
     
     

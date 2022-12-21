@@ -2,6 +2,17 @@ import { db } from "../../firebaseConfig";
 import { addDoc, collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
 
+export async function getSectionAcess(id) {
+    const response = await getDocs(collection(db, "Departamentos", `${id}`, "Sessoes"));
+
+    const data = response.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+
+    return data;
+}
+
 
 
 export async function addRangeAcess(body, idDep, idSection) {
@@ -19,13 +30,3 @@ export async function addSectionAcess(body, id) {
     return response;
 }
 
-export async function getSectionAcess(id) {
-    const response = await getDocs(collection(db, "Departamentos", `${id}`, "Sessoes"));
-
-    const data = response.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
-
-    return data;
-}

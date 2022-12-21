@@ -13,11 +13,8 @@ export class SectionService {
     status = '';
 
 
-    constructor() {
-        
-    }
-
     adicionarSessao(id, nameSection) {
+
         const body = {
             sectionName: nameSection,
             qntProdutos: 524,
@@ -35,8 +32,5 @@ export class SectionService {
        return getSectionAcess(id);
     }
 
-    getRanges(){
-
-        
-    }
+   
 }

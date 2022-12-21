@@ -26,11 +26,7 @@ export default function Areas(props) {
             if(area){
                 setProdutos(area.produtos)
                 setQntItens(area.qntItens) 
-            }
-            
-            
-
-            
+            } 
     }, [area]);
 
     function criarProduto(){

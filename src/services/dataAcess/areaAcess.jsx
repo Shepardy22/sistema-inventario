@@ -6,6 +6,11 @@ export async function getAreaAcess(idDep, idSection, idRange, idArea) {
     return response;
 }
 
+export async function addAreasAcess(idDep, idSection, idRange, body) {
+    const response = await addDoc(collection(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`, "Ranges", `${idRange}`, "Areas"), body);
+    return response;
+}
+
 export async function editAreaAcess(idDep, idSection, idRange, idArea, produtos, ) {
     const responseRef = await doc(db,
     "Departamentos", `${idDep}`,
