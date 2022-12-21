@@ -39,8 +39,7 @@ export default function Ranges(props) {
 
     useEffect(() => {   
         if(area){
-            somaItemsArea(area.produtos);
-            
+            somaItemsArea(area.produtos); 
         }
     }, [area]);
 
@@ -120,7 +119,7 @@ export default function Ranges(props) {
 
     
 
-    const nomeRange                                                 = props.range.nameRange;
+    const nomeRange                                                 = props.range.rangeName;
 
     return(
         <div className                                              = {`flex flex-col sm:flex-row border p-2  ${styles.boxShadow}`}>
@@ -128,7 +127,8 @@ export default function Ranges(props) {
             <div className                                          = {`bg-primaryBg-100 w-full sm:w-1/2 mr-2  ${styles.boxShadow}`}>
                 <div className                                      = {`bg-orange-500  p-2    ${styles.boxShadow} flex justify-between `}>
                     <span>{nomeRange && nomeRange}</span>
-                       <span>Produtos</span> 
+                       
+                       <span className="ml-12">Produtos</span> 
                        <span className                              = "mr-2">Itens</span>
                     
                 </div>
@@ -136,9 +136,13 @@ export default function Ranges(props) {
                 {areas && areas.map((area) => (  
                     <div key                                        = {area.id}
                     className                                       = {` border m-1 flex justify-between text-orange-500 `}>
-                        <button onClick                             = {()=>{selectAreas(area)}} className={`bg-gray-300 ${styles.renderButton} ${areaId === area.id  && `${styles.selected} `} `}>Área {area.nomeArea}</button>
-                        <span>{area && area.produtos.length}</span>
-                        <span className                             = "mr-2">{area.qntItens}</span>
+                        <button onClick                             = {()=>{selectAreas(area)}} className={`bg-gray-300 ${styles.renderButton} ${areaId === area.id  && `${styles.selected} `} `}>
+                            Área {area.nomeArea}
+                        </button>
+
+                        <span>4</span> 
+                        
+                        <span className                             = "mr-2">456</span>
                         
                     </div>
                     ))}
@@ -175,6 +179,7 @@ export default function Ranges(props) {
                                     </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         {area ? area.produtos.map((produto, index) =>(  
                                             <tr key                 = {index}>
                                                 <td>{produto.sku}</td>
@@ -183,7 +188,7 @@ export default function Ranges(props) {
                                             </tr>)) : 
                                             <tr>
                                                 <td colSpan         = "3">Nenhuma área selecionada</td>
-                                            </tr>}
+                                            </tr>} 
                                     </tbody>
                                 </Table>
                         

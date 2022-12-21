@@ -32,7 +32,7 @@ export default function NavBar(props) {
                 </li>
 
                 <li className               = {selected ==="Produtos" ? `Selected` : 'NavBarItem'}>
-                    <Link  to               = "/Sessoes">
+                    <Link  to               = "/Produtos">
                         <button className   = {`text-gray-300 hidden sm:flex sm:list-none`} ><span className="NavBarItem"><span className="flex gap-1">
                             <FaGripVertical className="my-auto"/> Produtos
                         </span></span></button>
