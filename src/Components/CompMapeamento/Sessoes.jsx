@@ -1,31 +1,18 @@
 import React from "react";
-import { collection, deleteDoc, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Row } from "react-bootstrap";
-import { db } from "../../firebaseConfig";
-import TabelaDescDep from "../Tabelas/TabelaDescDep";
+
 import TabelaDescSection from "../Tabelas/TabelaDescSection";
-import { addRangeAction, removeRangeAction } from "../../services/actions/sectionActions";
-import { addRangeAcess } from "../../services/dataAcess/sectionAcess";
-import { addAreasAction } from "../../services/actions/rangeAction";
 import {RangeService} from "./RangeService";
 
-import { DepartamentoService } from "./DepartamentoService";
 
 import styles from "./Sessoes.module.scss";
 import { AreasService } from "./AreasService";
 
 
-import SectionControl from "../../services/SectionControl";
-import MapeamentoControle from "../../services/MapeamentoControle";
-import RangeControl from "../../services/RangeControl";
-
 
 export default function Sessoes(props) {
 
-    const mapControl = MapeamentoControle();
-    const sectionControl =  SectionControl();
-    const rangeControl = RangeControl();
+
 
     
 
@@ -35,7 +22,7 @@ export default function Sessoes(props) {
     const sessionObj                                                    = props.section;
     const rangeHandle                                                   = props.range;
 
-    const departamentoService = new DepartamentoService();
+    
     
 
 

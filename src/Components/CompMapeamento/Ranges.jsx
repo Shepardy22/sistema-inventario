@@ -2,8 +2,6 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { db } from "../../firebaseConfig";
-import { updateItemAction } from "../../services/actions/areaAction";
-import { removeAreaAction, updateQntAction } from "../../services/actions/rangeAction";
 import { addAreasAcess } from "../../services/dataAcess/RangeAcess";
 import styles from "./Ranges.module.scss";
 
@@ -79,7 +77,7 @@ export default function Ranges(props) {
         const idArea                                                = areaId;
         
         const itens                                                 = qnt;
-        updateQntAction(idDep, idSection, idRange, idArea, itens);
+        //updateQntAction(idDep, idSection, idRange, idArea, itens);
     }
     function selectAreas(area){
         
@@ -111,7 +109,7 @@ export default function Ranges(props) {
         const idSection                                             = sessionObj;
         const idRange                                               = rangeObj;
         const idArea                                                = areaId;
-        removeAreaAction(idDep, idSection, idRange, idArea);
+        //removeAreaAction(idDep, idSection, idRange, idArea);
     }
     function navigateTo(){
         to("Areas")

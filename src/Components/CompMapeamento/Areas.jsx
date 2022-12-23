@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { FaAlignCenter, FaAngleDoubleLeft, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { db } from "../../firebaseConfig";
-import { editAreaAction, getAreaAction, updateItemAction } from "../../services/actions/areaAction";
 import { getAreaAcess } from "../../services/dataAcess/areaAcess";
 
 import styles from "./Areas.module.css";
@@ -38,7 +37,7 @@ export default function Areas(props) {
             nomeProduto                                         : nomeProduto,
             qntProduto                                          : qntConvertida,
         }
-        editAreaAction(idDep, idSection, idRange, idArea, produtos )
+        //editAreaAction(idDep, idSection, idRange, idArea, produtos )
         setsku(0)
         setNomeProduto('')
         setQntProduto(0) 
@@ -66,7 +65,7 @@ export default function Areas(props) {
         areaSelecionada.nomeProduto                             = nomeProduto;
         areaSelecionada.qntProduto                              = qntProduto;
         
-        updateItemAction(idDep, idSection, idRange, idArea, produtos)
+        //updateItemAction(idDep, idSection, idRange, idArea, produtos)
         setProdutos(produtos)
         setsku(0)
         setNomeProduto('')
@@ -82,7 +81,7 @@ export default function Areas(props) {
         setsku('')
         setNomeProduto('')
         setQntProduto('')
-        updateItemAction(idDep, idSection, idRange, idArea, produtos)
+        //updateItemAction(idDep, idSection, idRange, idArea, produtos)
     
     }
    

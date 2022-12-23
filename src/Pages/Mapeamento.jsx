@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Areas from "../Components/CompMapeamento/Areas";
 import Departamentos from "../Components/CompMapeamento/departamentos";
+import { DepartamentService } from "../Components/CompMapeamento/DepartamentService";
 import Ranges from "../Components/CompMapeamento/Ranges";
 import Sessoes from "../Components/CompMapeamento/Sessoes";
 import NavBar from "../Components/NavBar";
 import SubNav from "../Components/SubNav";
+
+import MapControl from "../services/MapControl";
 
 
 
@@ -13,9 +16,10 @@ import SubNav from "../Components/SubNav";
 
 export default function Mapeamento() {
 
-
+    const mapControl = MapControl();
     
-    const [departamento, setdepartamento]   = useState(null);
+    
+    const [departamento, setdepartamento]   = useState(mapControl.getDepartamento());
     const [session, setSession]             = useState(null);
     const [range, setRange]                 = useState(null);
     const [area, setArea]                   = useState(null);

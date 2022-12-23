@@ -4,6 +4,17 @@ import { useEffect, useState } from "react";
 
 
 
+export async function GetDepAcess() {
+    const response = await getDocs(collection(db, "Departamentos"));
+
+    const data = response.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+
+    return data;
+}
+
 
 
 export async function addDepAcess(body) {
@@ -28,16 +39,7 @@ export async function updateDepAcess(body , id) {
    updateDoc(cityRef, body);
 }
 
-export async function GetDepAcess() {
-    const response = await getDocs(collection(db, "Departamentos"));
 
-    const data = response.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
-
-    return data;
-}
 
 export function GetDepAcessRealTime() {
 
