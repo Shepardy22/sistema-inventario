@@ -18,11 +18,22 @@ export default function Mapeamento() {
 
     const mapControl = MapControl();
     
-    
-    const [departamento, setdepartamento]   = useState(mapControl.getDepartamento());
-    const [session, setSession]             = useState(null);
-    const [range, setRange]                 = useState(null);
-    const [area, setArea]                   = useState(null);
+
+    function handleListCache(){
+        const departament = mapControl.getDepartament();
+        const session = mapControl.getSection();
+        const range = mapControl.getRange();
+        const area = mapControl.getArea();
+
+        return {
+            departament,
+            session,
+            range,
+            area
+        }
+    }
+
+    const selectControl = handleListCache();
 
     //SubMenu Navbar Handler
     const [subMenu, setSubMenu]             = useState('departamentos');
@@ -31,20 +42,6 @@ export default function Mapeamento() {
         setSubMenu(subMenu);  
     }
 
-    function selecaoDepartamento(id){
-        setdepartamento(id)
-    }
-    function selecaoSessao(obj){
-        setSession(obj)
-
-    }
-    function selecaoRange(obj){
-        setRange(obj)
-    }
-    function selecaoArea(obj){
-        setArea(obj)
-    }
-    
 
 
     return (
@@ -55,49 +52,24 @@ export default function Mapeamento() {
             <div className                  = 'MainPainel '>
                 
                 <div className              = 'topPainel'>
-                    <SubNav submenu01       = 'Departamentos'
+                    <SubNav 
+                        submenu01       = 'Departamentos'
                         submenu02           = 'Sessoes'
                         submenu03           = 'Ranges'
                         submenu04           = 'Áreas'
 
                         subMenu             = {handleSubMenu}
-                        to                  = {subMenu}/>
-                        
-                    
-                    
-                    
-
+                        to                  = {subMenu}
+                    />
                 </div>
 
                 {/* Área de Renderização Condiçional */}
                 <div className="">
-                    {subMenu === 'departamentos' && <Departamentos
-                        handleDep               = {selecaoDepartamento}
-                        sectionObj              = {selecaoSessao}
-                        handleSubMenu           = {handleSubMenu}
-                        />}
-                    {subMenu === 'Sessoes' && <Sessoes
-                        dep                     = {departamento}
-                        section                 = {session}
-                        range                   = {selecaoRange}
-                        handleSubMenu           = {handleSubMenu}/>}
-                    {subMenu === 'Ranges' && <Ranges
-                        dep                     = {departamento}
-                        section                 = {session}
-                        range                   = {range}
-                        area                    = {selecaoArea}
-                        to                      = {handleSubMenu}/>}
-                    
-                    {subMenu === 'Areas' && <Areas
-                        dep                     = {departamento}
-                        section                 = {session}
-                        range                   = {range}
-                        area                    = {area}
-                        to                      = {handleSubMenu}
-                    />}
-                    
+                    {subMenu === 'departamentos' && <Departamentos/>}
+                    {subMenu === 'Sessoes' && <Sessoes handleSubMenu = {handleSubMenu}/>}
+                    {subMenu === 'Ranges' && <Ranges to = {handleSubMenu}/>}
+                    {subMenu === 'Areas' && <Areas to = {handleSubMenu}/>}
                 </div>
-
 
             </div>
 

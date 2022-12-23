@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import TabelaDescDep from "../Tabelas/TabelaDescDep";
 
 import { FireService } from "../../services/FireService";
+import MapControl from "../../services/MapControl";
 
 export default function Departamentos(props) {
-    
+    const mapControl = MapControl();
     const fireService                                         = new FireService();
     
     const [departamentsList, setDepartamentsList]             = useState([]);
@@ -22,7 +23,7 @@ export default function Departamentos(props) {
                                     
     async function loading(){
         const departamentsList                                = await fireService.getDepartamentsList();
-        setDepartamentsList(departamentsList);  
+        setDepartamentsList(departamentsList);
     }
     
     useEffect(() => { 
@@ -31,18 +32,26 @@ export default function Departamentos(props) {
 
     function selectDepartament(idDepartament) {
         function findDepartament(){
-            const departamentSelected                         = departamentsList.find((departament)=>{ return departament.id === idDepartament})
+            const departamentSelected                         = departamentsList.find((departament) => departament.id === idDepartament)
+            console.log(`Departamento Selecionado: ${departamentSelected.name}`,departamentSelected)
             setDepartamentSelected(departamentSelected);
-            console.log(departamentSelected)
+            mapControl.setDepartament(departamentSelected);
+            
         } 
         async function SectionsList(){
             const sectionsList                                = await fireService.getSectionsList(idDepartament);
             setSectionsList(sectionsList);
-            console.log(sectionsList)
         }
         findDepartament()
         SectionsList();
     }
+    function selectSection(id) {
+        const section                                         = sectionsList.find((section) => section.id === id);
+        setSectionSelected(section);
+        mapControl.setSection(section);
+        console.log(`Sessão Selecionada: ${section.sectionName}` ,section)
+    }
+
     function addDepartamento(name, body) {
         fireService.addDepartament(name, body)    
     }
@@ -73,11 +82,7 @@ export default function Departamentos(props) {
         
 
     }
-    function selectSection(id) {
-
-        const section                                         = sectionsList.find((section) => section.id === id);
-        setSectionSelected(section);
-    }
+    
 
     return (
         <div className                                        = "bg-white ">
@@ -123,14 +128,16 @@ export default function Departamentos(props) {
                         </div>                                
                     </div>
 
-                    <div className                            = "bg-primaryBg-100">
+                    <div className                            = "bg-primaryBg-100 p-2">
                         <h3 className                         = "text-lg text-gray-400">Adicionar Departamento</h3>
-                        <input type                           = "text"
+                        <input
+                            className                         = "" 
+                            type                           = "text"
                             placeholder                       = "Nome do Departamento"
                             value                             = {nameDepartament}
                             onChange                          = {(e) => setNameDepartament(e.target.value)}
                         />
-                        <button className                     = "botaoAdd" onClick={addDepartamento}>Adicionar</button>
+                        <button className                     = "border p-1 text-gray-300 ml-2" onClick={addDepartamento}>Adicionar</button>
                         
                     </div>
 
@@ -154,24 +161,32 @@ export default function Departamentos(props) {
                         </div>
                         {/* Resumo das Sessão */}
                         <div className                        = "text-white border flex flex-col justify-center mx-auto items-center w-2/3  " >
-                            Descrição de Inventário
+                            Descrição do Departamento
                             <p className                      = "flex flex-col items-center">
-                                <span>Descrição</span>
-                                <span>{sectionSelected && <span>Sessao descriçao</span> }</span>
-                                {/* <span>{descricao && descricao.qntProdutos}</span>
-                                <span>{descricao && descricao.name}</span> */}
+                                <span>{departamentSelected.name}</span>
+                                <span>qnt Produtos: {departamentSelected.qntProdutos}</span>
+                                <span>{sectionSelected.id && <span>Sessao descriçao</span>}</span>
+                                <span>{sectionSelected && sectionSelected.sectionName}</span>
+                                <span>{sectionSelected && sectionSelected.qntProdutos}</span>
+                                 
                             </p>
+                            <div>
+                                    <button className="border p-2 text-gray-300 ml-2"
+                                    onClick={()=>{}}>
+                                        +Info
+                                    </button>
+                                 </div>
                         </div>
                     </div>
                     
                     {/* Adicionar Sessão */}
-                    <div className                            = "bg-primaryBg-100">
+                    <div className                            = "bg-primaryBg-100 p-2">
                         <input type                           = "text"
                                 placeholder                   = "Nome da Sessão"
                                 value                         = {nameSection}
                                 onChange                      = {(e) => setNameSection(e.target.value)}
                             />
-                        <button onClick                       = {()=>{addSection()}} className="Sessoes addSection">
+                        <button onClick                       = {()=>{addSection()}} className="border p-1 text-gray-300 ml-2">
                             Adicionar Sessão
                         </button>
                         
@@ -188,16 +203,16 @@ export default function Departamentos(props) {
                 <div className                                = " ">
                     <div className                            = "flex justify-between ml-2">
 
-                        <h4>{descriptions.name}</h4>
-                        {descriptions && (<button className   = "botaoAdd"
-                            onClick                           = {() => { deleteDepartament(descriptions.id) }}>
+                        <h4>{departamentSelected.name}</h4>
+                        {departamentSelected && (<button className   = "botaoAdd"
+                            onClick                           = {() => { deleteDepartament(departamentSelected.id) }}>
                                 Excluir Departamento
                         </button>)}
                     </div>
 
                     <div className                            = "">
                         
-                        <TabelaDescDep desc                   = {descriptions} />
+                        <TabelaDescDep desc                   = {departamentSelected} />
                         
                     </div>
                 </div>

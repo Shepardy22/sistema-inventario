@@ -8,8 +8,10 @@ export class FireService{
     getDepartamentsList(){
        
        async function getDepartamentsList(){
+        console.log(`[FireService] Carregando Lista de Departamentos...`)
         let departamentsList = await GetDepAcess();
-            return departamentsList;
+
+        return departamentsList;
        }
 
 
@@ -18,7 +20,9 @@ export class FireService{
 
     getSectionsList(id){
         async function getSectionsList(id){
+            console.log('[FireService] Carregando Lista de Sessões...')
             let sectionsList = await getSectionAcess(id);
+            
             return sectionsList;
         }
 

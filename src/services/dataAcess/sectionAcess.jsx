@@ -9,7 +9,7 @@ export async function getSectionAcess(id) {
         id: doc.id,
         ...doc.data(),
     }));
-
+    console.log(data);
     return data;
 }
 

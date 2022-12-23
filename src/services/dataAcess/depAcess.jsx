@@ -11,7 +11,7 @@ export async function GetDepAcess() {
         id: doc.id,
         ...doc.data(),
     }));
-
+    console.log(data);
     return data;
 }
 
