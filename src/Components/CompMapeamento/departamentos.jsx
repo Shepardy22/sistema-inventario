@@ -19,6 +19,8 @@ export default function Departamentos(props) {
 
     const depID                                               = departamentSelected.id;
     const descriptions                                        = descriptionDepartament();
+
+    
     
                                     
     async function loading(){
@@ -45,6 +47,7 @@ export default function Departamentos(props) {
         findDepartament()
         SectionsList();
     }
+
     function selectSection(id) {
         const section                                         = sectionsList.find((section) => section.id === id);
         setSectionSelected(section);
@@ -52,19 +55,35 @@ export default function Departamentos(props) {
         console.log(`Sessão Selecionada: ${section.sectionName}` ,section)
     }
 
-    function addDepartamento(name, body) {
-        fireService.addDepartament(name, body)    
+    function addDepartamento() {
+        const body = {
+            name: nameDepartament,
+            description: 'Descrição do Departamento',
+            status: 'Ativo'
+        }
+       fireService.addDepartament(body) 
+       loading();
+       setNameDepartament('');   
     }
     function deleteDepartament(id) {
         fireService.deleteDepartament(id);
+        console.log(`Departamento deletado: ${departamentSelected.name}`)
+        loading();
     }
-    function addSection(name, body){
+    function addSection(){
         const id                                              = departamentSelected.id;
-        fireService.addSection(id, nameSection);
+        const body = {
+            sectionName: nameSection,
+            status: 'Ativo'
+        }
+        fireService.addSection(id, body);
+        const sectionsList                                    = fireService.getSectionsList(id);
+        setSectionsList(sectionsList);
         setNameSection('');
     }
-    function removeSection(idSection){
+    function removeSection(){
         const idDepartament                                   = departamentSelected.id;
+        const idSection                                       = sectionSelected.id;
         fireService.deleteSection(idDepartament, idSection);
     }
     function descriptionDepartament(){
@@ -180,7 +199,7 @@ export default function Departamentos(props) {
                     </div>
                     
                     {/* Adicionar Sessão */}
-                    <div className                            = "bg-primaryBg-100 p-2">
+                    <div className                            = "bg-primaryBg-100 p-2 flex">
                         <input type                           = "text"
                                 placeholder                   = "Nome da Sessão"
                                 value                         = {nameSection}
@@ -188,6 +207,9 @@ export default function Departamentos(props) {
                             />
                         <button onClick                       = {()=>{addSection()}} className="border p-1 text-gray-300 ml-2">
                             Adicionar Sessão
+                        </button>
+                        <button onClick                       = {()=>{removeSection()}} className="border p-1 text-gray-300 ml-2">
+                            Excluir Sessão
                         </button>
                         
                     </div>

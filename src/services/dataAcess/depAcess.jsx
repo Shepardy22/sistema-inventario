@@ -19,6 +19,7 @@ export async function GetDepAcess() {
 
 export async function addDepAcess(body) {
     const response = await addDoc(collection(db, "Departamentos"), body);
+    console.log(`departamento adicionado com o nome: ${body.name}`);
     return response;
 }
 

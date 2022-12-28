@@ -1,5 +1,5 @@
 import { GetDepAcess, addDepAcess, removeDepAcess } from "./dataAcess/depAcess";
-import { getSectionAcess } from "./dataAcess/sectionAcess";
+import { addSectionAcess, getSectionAcess, removeSectionAcess } from "./dataAcess/sectionAcess";
 
 
 
@@ -48,12 +48,26 @@ export class FireService{
     }
 
     addDepartament(body){
-        addDepAcess(body)
+         console.log('[FireService] Adicionando Departamento...')
+        addDepAcess(body);
+      
     }
     
     deleteDepartament(id){
         removeDepAcess(id)
     }
+
+    addSection(id, body){
+        console.log('[FireService] Adicionando Sessão...')
+        addSectionAcess(id, body);
+    }
+
+    deleteSection(idDep, idSec){
+        console.log('[FireService] Removendo Sessão...')
+        removeSectionAcess(idDep, idSec);
+
+    }
+
 
 }
 

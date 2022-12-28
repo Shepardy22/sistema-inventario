@@ -25,8 +25,14 @@ export async function removeRangeAcess(idDep, idSection , idRange) {
     return response;
 }
 
-export async function addSectionAcess(body, id) {
+export async function addSectionAcess(id, body) {
+    console.log(`Sessão ${body.sectionName} adicionada`);
     const response = await addDoc(collection(db, "Departamentos", `${id}`, "Sessoes"), body);
     return response;
 }
 
+export async function removeSectionAcess(idDep, idSection) {
+    console.log(`Sessão ID: ${idSection} removida`);
+    const response = await deleteDoc(doc(db, "Departamentos", `${idDep}`, "Sessoes", `${idSection}`));
+    return response;
+}
